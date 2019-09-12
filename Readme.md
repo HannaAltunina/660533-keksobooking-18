@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анна Алтунина](https://up.htmlacademy.ru/javascript/18/user/660533).
-* Наставник: [Руфат Хасларов] (https://up.htmlacademy.ru/javascript/18/user/372587).
+* Наставник: [Руфат Хасларов](https://up.htmlacademy.ru/javascript/18/user/372587).
 
 ---
 
