@@ -15,7 +15,7 @@ var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
 var similarListElement = document.querySelector('.map__pins');
 
-var getAuthorAvatarNumber = function (MAX_USER_NUMBER) {
+var getAuthorAvatarNumber = function () {
   return ('img/avatars/user0' + Math.floor(Math.random() * MAX_USER_NUMBER) + '.png');
 };
 
@@ -40,7 +40,7 @@ var getRandomLengthArray = function (arr) {
 var genNewProposition = function (proposition) {
   proposition = {
     author: {
-      avatar: getAuthorAvatarNumber(propositions)
+      avatar: getAuthorAvatarNumber()
     },
     offer: {
       title: String,
