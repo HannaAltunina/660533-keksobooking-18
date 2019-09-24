@@ -14,6 +14,7 @@ var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
 var similarListElement = document.querySelector('.map__pins');
+var pin = document.querySelector('.map__pin');
 
 var getAuthorAvatarNumber = function () {
   return ('img/avatars/user0' + Math.floor(Math.random() * MAX_USER_NUMBER) + '.png');
@@ -37,7 +38,7 @@ var getRandomLengthArray = function (arr) {
   return arr;
 };
 
-var genNewProposition = function (proposition) {
+var generateProposition = function (proposition) {
   proposition = {
     author: {
       avatar: getAuthorAvatarNumber()
@@ -63,19 +64,17 @@ var genNewProposition = function (proposition) {
   return proposition;
 };
 
-var getPropositionsArray = function (length) {
-  var arr = [];
+var getPropositions = function (length) {
+  var propositions = [];
   for (var j = 0; j < length; j++) {
-    arr[j] = genNewProposition();
+    propositions[j] = generateProposition();
   }
-  return arr;
+  return propositions;
 };
 
-var propositions = getPropositionsArray(MAX_USER_NUMBER);
 
 map.classList.remove('map--faded');
 
-var pin = document.querySelector('.map__pin');
 var renderPin = function (proposition) {
   var pinElement = pin.cloneNode(true);
 
@@ -86,15 +85,17 @@ var renderPin = function (proposition) {
   return pinElement;
 };
 
-var fragment = document.createDocumentFragment();
 
-var getFragmentChildren = function () {
+var renderPins = function () {
+  var propositions = getPropositions(MAX_USER_NUMBER);
+  var fragment = document.createDocumentFragment();
   for (var k = 0; k < propositions.length; k++) {
     fragment.appendChild(renderPin(propositions[k]));
   }
+  return fragment;
 };
 
-getFragmentChildren(propositions);
+renderPins();
 
-similarListElement.appendChild(fragment);
+similarListElement.appendChild(renderPins());
 
