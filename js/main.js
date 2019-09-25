@@ -15,6 +15,7 @@ var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
 var similarListElement = document.querySelector('.map__pins');
 var pin = document.querySelector('.map__pin');
+var card = document.querySelector('#card').content.querySelector('.popup');
 
 var getAuthorAvatarNumber = function () {
   return ('img/avatars/user0' + Math.floor(Math.random() * MAX_USER_NUMBER) + '.png');
@@ -85,7 +86,6 @@ var renderPin = function (proposition) {
   return pinElement;
 };
 
-
 var renderPins = function () {
   var propositions = getPropositions(MAX_USER_NUMBER);
   var fragment = document.createDocumentFragment();
@@ -99,3 +99,21 @@ renderPins();
 
 similarListElement.appendChild(renderPins());
 
+var renderCard = function (proposition) {
+  var cardElement = card.cloneNode(true);
+
+  cardElement.querySelector('.popup__title').textContent = proposition.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = proposition.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = proposition.offer.price + '₽/ночь';
+  cardElement.querySelector('.popup__type').textContent = proposition.offer.type;
+  cardElement.querySelector('.popup__text--capacity').textContent = proposition.offer.rooms + ' комнаты для ' + proposition.offer.guests + ' гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + proposition.offer.checkin + ', выезд до ' + proposition.offer.checkout;
+  cardElement.querySelector('.popup__features').textContent = proposition.offer.features;
+  cardElement.querySelector('.popup__description').textContent = proposition.offer.description;
+  cardElement.querySelector('.popup__photos').src = proposition.offer.photos;
+  cardElement.querySelector('.popup__avatar').src = proposition.author.avatar;
+  return cardElement;
+};
+
+renderCard();
+map.appendChild(renderCard());
