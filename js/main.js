@@ -1,8 +1,13 @@
 'use strict';
 
 var MAX_USER_NUMBER = 8;
+var MIN_ARRAY_LENGTH = 1;
 var OFFER_ADDRESS = '600, 350';
+var MIN_PRICE = 0;
+var MAX_PRICE = 1000000;
 var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var MIN_ROOMS = 1;
+var MAX_ROOMS = 100;
 var CHECKIN_DATES = ['12:00', '13:00', '14:00'];
 var CHECKOUT_DATES = ['12:00', '13:00', '14:00'];
 var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -17,44 +22,45 @@ var similarListElement = document.querySelector('.map__pins');
 var pin = document.querySelector('.map__pin');
 var card = document.querySelector('#card').content.querySelector('.popup');
 
-var getAuthorAvatarNumber = function () {
-  return ('img/avatars/user0' + Math.floor(Math.random() * MAX_USER_NUMBER) + '.png');
-};
-
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
 
 var getRandomNumber = function (min, max) {
-  return Math.floor(min + Math.random(max - min + 1));
+  return Math.floor(min + Math.random() * (max - min + 1));
 };
 
-var getRandomLengthArray = function (arr) {
-  arr = [];
-  var newArrayLength = Math.floor(Math.random() * arr.length);
 
-  for (var i = 0; i <= newArrayLength; i++) {
-    return arr[Math.floor(Math.random() * arr.length)];
+var getRandomLengthArray = function (arr) {
+
+  var length = getRandomNumber(MIN_ARRAY_LENGTH, arr.length);
+  var newArr = [];
+  for (var i = 0; i < length; i++) {
+    newArr[i] = getRandomElement(arr);
   }
-  return arr;
+  return newArr;
+};
+
+var getGuestsNumber = function (rooms) {
+  return (rooms === 1) ? ('для ' + rooms + ' гостя') : ('для ' + rooms + ' гостей');
 };
 
 var generateProposition = function (proposition) {
   proposition = {
     author: {
-      avatar: getAuthorAvatarNumber()
+      avatar: 'img/avatars/user0' + 'j + 1' + '.png'
     },
     offer: {
-      title: String,
+      title: '',
       address: OFFER_ADDRESS,
-      price: Number,
+      price: getRandomNumber(MIN_PRICE, MAX_PRICE),
       type: getRandomElement(PROPERTY_TYPES),
-      rooms: Number,
-      guests: Number,
+      rooms: getRandomNumber(MIN_ROOMS, MAX_ROOMS),
+      guests: getGuestsNumber(getRandomNumber(MIN_ROOMS, MAX_ROOMS)),
       checkin: getRandomElement(CHECKIN_DATES),
       checkout: getRandomElement(CHECKOUT_DATES),
       features: getRandomLengthArray(FEATURES_LIST),
-      description: String,
+      description: '',
       photos: getRandomLengthArray(PHOTOS)
     },
     location: {
@@ -72,7 +78,6 @@ var getPropositions = function (length) {
   }
   return propositions;
 };
-
 
 map.classList.remove('map--faded');
 
