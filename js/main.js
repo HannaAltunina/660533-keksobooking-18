@@ -32,7 +32,6 @@ var getRandomNumber = function (min, max) {
 
 
 var getRandomLengthArray = function (arr) {
-
   var length = getRandomNumber(MIN_ARRAY_LENGTH, arr.length);
   var newArr = [];
   for (var i = 0; i < length; i++) {
@@ -45,13 +44,13 @@ var getGuestsNumber = function (rooms) {
   return (rooms === 1) ? ('для ' + rooms + ' гостя') : ('для ' + rooms + ' гостей');
 };
 
-var generateProposition = function (proposition) {
-  proposition = {
+var generateProposition = function (j) {
+  var proposition = {
     author: {
-      avatar: 'img/avatars/user0' + 'j + 1' + '.png'
+      avatar: 'img/avatars/user0' + (j + 1) + '.png'
     },
     offer: {
-      title: '',
+      title: PIN_TITLE + ' ' + (j + 1),
       address: OFFER_ADDRESS,
       price: getRandomNumber(MIN_PRICE, MAX_PRICE),
       type: getRandomElement(PROPERTY_TYPES),
@@ -74,7 +73,7 @@ var generateProposition = function (proposition) {
 var getPropositions = function (length) {
   var propositions = [];
   for (var j = 0; j < length; j++) {
-    propositions[j] = generateProposition();
+    propositions[j] = generateProposition(j);
   }
   return propositions;
 };
