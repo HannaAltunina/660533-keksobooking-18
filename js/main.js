@@ -18,9 +18,16 @@ var LOCATION_X_MAX = map.style.width;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
-var similarListElement = document.querySelector('.map__pins');
+// var similarListElement = document.querySelector('.map__pins');
 var pin = document.querySelector('.map__pin');
 var card = document.querySelector('#card').content.querySelector('.popup');
+var onMainMapPin = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var mapFiltres = document.querySelector('.map__filters');
+var formInputs = adForm.querySelectorAll('input');
+var formSelects = adForm.querySelectorAll('select');
+var formFieldsets = adForm.querySelectorAll('fieldset');
+
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -78,8 +85,6 @@ var getPropositions = function (length) {
   return propositions;
 };
 
-map.classList.remove('map--faded');
-
 var renderPin = function (proposition) {
   var pinElement = pin.cloneNode(true);
 
@@ -101,7 +106,7 @@ var renderPins = function () {
 
 renderPins();
 
-similarListElement.appendChild(renderPins());
+// similarListElement.appendChild(renderPins());
 
 var renderCard = function (proposition) {
   var cardElement = card.cloneNode(true);
@@ -121,3 +126,26 @@ var renderCard = function (proposition) {
 
 renderCard();
 map.appendChild(renderCard());
+
+var disabledDeletion = function (inputs) {
+  for (var i = 0; i <= inputs.length; i++) {
+    inputs[i].removeAttribute('disabled');
+  }
+};
+
+var pageActivation = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  mapFiltres.classList.remove('ad-form--disabled');
+  disabledDeletion(formInputs);
+  disabledDeletion(formSelects);
+  disabledDeletion(formFieldsets);
+};
+
+onMainMapPin.addEventListener('mousedown', pageActivation());
+
+onMainMapPin.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    pageActivation();
+  }
+});
