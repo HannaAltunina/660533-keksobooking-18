@@ -19,9 +19,9 @@ var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
 var MAIN_PIN_WIDTH = 160;
-var MAIN_PIN_HEIGHT = 160;
-// var PIN_WIDTH = 40;
-// var PIN_HEIGHT = 66;
+var MAIN_PIN_HEIGHT = 80;
+var PIN_WIDTH = 40;
+var PIN_HEIGHT = 132;
 // var similarListElement = document.querySelector('.map__pins');
 var pin = document.querySelector('.map__pin');
 var card = document.querySelector('#card').content.querySelector('.popup');
@@ -37,7 +37,7 @@ var capacity = document.getElementById('capacity');
 var guestNumber = capacity.querySelectorAll('option');
 var onSubmitButton = adForm.querySelector('ad-form__submit');
 
-// var addressInput = adForm.getElementsByName('address');
+var addressInput = document.getElementsByName('address');
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -62,16 +62,8 @@ var getGuestsNumber = function (rooms) {
 };
 
 var getAddressCoordinate = function (width, height) {
-  var left = parseInt(onMainMapPin.style.left, 10) + width / 2;
-  var top = parseInt(onMainMapPin.style.top, 10) + height / 2;
-  return left + ', ' + top;
+  return (parseInt(onMainMapPin.style.left, 10) + width / 2) + ', ' + (parseInt(onMainMapPin.style.top, 10) + height);
 };
-
-// var getAddressCoordinate = function () {
-//   var left = onMainMapPin.style.left + PIN_WIDTH / 2;
-//   var top = onMainMapPin.style.top + PIN_HEIGHT;
-//   return left + ', ' + top;
-// };
 
 var generateProposition = function (j) {
   var proposition = {
@@ -162,6 +154,7 @@ var pageActivation = function () {
   disabledDeletion(formInputs);
   disabledDeletion(formSelects);
   disabledDeletion(formFieldsets);
+  addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
 };
 
 onMainMapPin.addEventListener('mousedown', pageActivation);
