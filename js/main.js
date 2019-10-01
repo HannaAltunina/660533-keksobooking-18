@@ -2,7 +2,7 @@
 
 var MAX_USER_NUMBER = 8;
 var MIN_ARRAY_LENGTH = 1;
-// var OFFER_ADDRESS = '600, 350';
+var OFFER_ADDRESS = '600, 350';
 var MIN_PRICE = 0;
 var MAX_PRICE = 1000000;
 var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
@@ -18,8 +18,6 @@ var LOCATION_X_MAX = map.style.width;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
-var MAIN_PIN_WIDTH = 160;
-var MAIN_PIN_HEIGHT = 80;
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 132;
 // var similarListElement = document.querySelector('.map__pins');
@@ -31,13 +29,9 @@ var mapFiltres = document.querySelector('.map__filters');
 var formInputs = adForm.querySelectorAll('input');
 var formSelects = adForm.querySelectorAll('select');
 var formFieldsets = adForm.querySelectorAll('fieldset');
-var roomSelection = document.getElementById('rooms');
-var roomNumber = roomSelection.querySelectorAll('option');
-var capacity = document.getElementById('capacity');
-var guestNumber = capacity.querySelectorAll('option');
-var onSubmitButton = adForm.querySelector('ad-form__submit');
-
-var addressInput = document.getElementsByName('address');
+var roomSelect = document.querySelector('#rooms');
+var capacitySelect = document.querySelector('#capacity');
+var addressInput = document.querySelector('#address');
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -72,7 +66,7 @@ var generateProposition = function (j) {
     },
     offer: {
       title: PIN_TITLE + ' ' + (j + 1),
-      address: getAddressCoordinate(MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT),
+      address: OFFER_ADDRESS,
       price: getRandomNumber(MIN_PRICE, MAX_PRICE),
       type: getRandomElement(PROPERTY_TYPES),
       rooms: getRandomNumber(MIN_ROOMS, MAX_ROOMS),
@@ -165,14 +159,24 @@ onMainMapPin.addEventListener('keydown', function (evt) {
   }
 });
 
-var checkGuestNumber = function () {
-  if (guestNumber.checked.value > roomNumber.checked.value) {
-    capacity.setCustomValidity('Количество гостей не должно превышать количество комнат');
+var checkRooms = function (select) {
+  for (var i = 0; i < select.options.length; i++) {
+    var roomsOption = roomSelect.options[i];
+  }
+
+  for (var j = 0; j < select.options.length; j++) {
+    var capacityOption = capacitySelect.options[j];
+  }
+
+  if (capacityOption.selected.value > roomsOption.selected.value) {
+    select.setCustomValidity('Количество гостей не должно превышать количество комнат');
   } else {
-    capacity.setCustomValidity('');
+    select.setCustomValidity('');
   }
 };
 
-onSubmitButton.addEventListener('click', function () {
-  checkGuestNumber();
-});
+roomSelect.addEventListener('change', checkRooms);
+
+capacitySelect.addEventListener('change', checkRooms);
+
+
