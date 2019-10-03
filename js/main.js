@@ -29,7 +29,7 @@ var mapFiltres = document.querySelector('.map__filters');
 var formInputs = adForm.querySelectorAll('input');
 var formSelects = adForm.querySelectorAll('select');
 var formFieldsets = adForm.querySelectorAll('fieldset');
-var roomSelect = document.querySelector('#rooms');
+var roomSelect = document.querySelector('#room_number');
 var capacitySelect = document.querySelector('#capacity');
 var addressInput = document.querySelector('#address');
 
@@ -159,24 +159,17 @@ onMainMapPin.addEventListener('keydown', function (evt) {
   }
 });
 
-var checkRooms = function (select) {
-  for (var i = 0; i < select.options.length; i++) {
-    var roomsOption = roomSelect.options[i];
-  }
 
-  for (var j = 0; j < select.options.length; j++) {
-    var capacityOption = capacitySelect.options[j];
-  }
+var checkRooms = function () {
+  var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
+  var capacitySelectedOption = capacitySelect.options[capacitySelect.selectedIndex].value;
 
-  if (capacityOption.selected.value > roomsOption.selected.value) {
-    select.setCustomValidity('Количество гостей не должно превышать количество комнат');
+  if (capacitySelectedOption > roomsSelectedOption) {
+    capacitySelect.setCustomValidity('Количество гостей не должно превышать количество комнат');
   } else {
-    select.setCustomValidity('');
+    capacitySelect.setCustomValidity('');
   }
 };
 
-roomSelect.addEventListener('change', checkRooms);
-
 capacitySelect.addEventListener('change', checkRooms);
-
-
+roomSelect.addEventListener('change', checkRooms);
