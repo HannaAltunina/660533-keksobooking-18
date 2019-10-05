@@ -36,6 +36,8 @@ var roomSelect = document.querySelector('#room_number');
 var capacitySelect = document.querySelector('#capacity');
 var typeSelect = document.querySelector('#type');
 var priceInput = document.querySelector('#price');
+var timeinSelect = document.querySelector('#timein');
+var timeoutSelect = document.querySelector('#timeout');
 var addressInput = document.querySelector('#address');
 var submit = document.querySelector('.ad-form__submit');
 
@@ -181,7 +183,6 @@ var pageActivation = function () {
 
 mainPin.addEventListener('mousedown', pageActivation);
 
-
 mainPin.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     pageActivation();
@@ -216,14 +217,30 @@ var changePricePlaceholder = function () {
 
 var checkPropertyPrices = function () {
   var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
-  var priceComform = getConformity(typeSelectedOption, PROPERTY_TYPES, MIN_PRICES);
+  var priceConform = getConformity(typeSelectedOption, PROPERTY_TYPES, MIN_PRICES);
   var translateType = getConformity(typeSelectedOption, PROPERTY_TYPES, TRANSLATE_PROPERTIES);
 
-  if (priceInput.value < priceComform) {
-    priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceComform + ' в объекте ' + translateType);
+  if (priceInput.value < priceConform) {
+    priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
     priceInput.validity = false;
   } else {
     priceInput.setCustomValidity('');
+  }
+};
+
+var getConformTime = function () {
+  var timeinSelectedOption = timeinSelect.options[timeinSelect.selectedIndex].value;
+  var timeoutSelectToCheck = getConformity(timeinSelectedOption, timeinSelect, timeoutSelect);
+  for (var i = 0; i < timeoutSelect.options.length; i++) {
+    if (timeoutSelect.options[i].value === timeoutSelectToCheck) {
+      // timeoutSelect.options[timeoutSelect.selectedIndex].removeAttribute('selected');
+      timeoutSelect.options[i] = timeoutSelect[timeoutSelect.selectedIndex].defaultSelected;
+      // timeoutSelect.options[i].selected = true;
+      // timeoutSelect.options[i].setAttribute('selected', 'selected');
+    } else {
+      timeoutSelect.setCustomValidity('время выезда соответствует времени заезда ' + timeoutSelectToCheck);
+      timeoutSelect.options[i].validity = false;
+    }
   }
 };
 
@@ -232,5 +249,7 @@ capacitySelect.addEventListener('change', checkRooms);
 roomSelect.addEventListener('change', checkRooms);
 priceInput.addEventListener('change', checkPropertyPrices);
 typeSelect.addEventListener('change', changePricePlaceholder);
+timeinSelect.addEventListener('change', getConformTime);
+
 
 submit.addEventListener('click', checkRooms, checkPropertyPrices);
