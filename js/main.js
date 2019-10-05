@@ -6,21 +6,23 @@ var OFFER_ADDRESS = '600, 350';
 var MIN_PRICE = 0;
 var MAX_PRICE = 1000000;
 var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var TRANSLATE_PROPERTIES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
 var MIN_ROOMS = 1;
 var MAX_ROOMS = 100;
 var CHECKIN_DATES = ['12:00', '13:00', '14:00'];
 var CHECKOUT_DATES = ['12:00', '13:00', '14:00'];
 var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var LOCATION_X_MIN = 0;
 var map = document.querySelector('.map');
-var LOCATION_X_MAX = map.style.width;
+var LOCATION_X_MIN = 0;
+var widthContentArea = document.documentElement.clientWidth;
+var BODY_WIDTH = 1200;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 var PIN_TITLE = 'Заголовок';
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 132;
-// var similarListElement = document.querySelector('.map__pins');
+var similarListElement = document.querySelector('.map__pins');
 var pin = document.querySelector('.map__pin');
 var card = document.querySelector('#card').content.querySelector('.popup');
 var onMainMapPin = document.querySelector('.map__pin--main');
@@ -32,6 +34,11 @@ var formFieldsets = adForm.querySelectorAll('fieldset');
 var roomSelect = document.querySelector('#room_number');
 var capacitySelect = document.querySelector('#capacity');
 var addressInput = document.querySelector('#address');
+var submit = document.querySelector('.ad-form__submit');
+
+var locationXMax = function () {
+  return (widthContentArea < BODY_WIDTH) ? widthContentArea : BODY_WIDTH;
+};
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -40,7 +47,6 @@ var getRandomElement = function (arr) {
 var getRandomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max - min + 1));
 };
-
 
 var getRandomLengthArray = function (arr) {
   var length = getRandomNumber(MIN_ARRAY_LENGTH, arr.length);
@@ -78,7 +84,7 @@ var generateProposition = function (j) {
       photos: getRandomLengthArray(PHOTOS)
     },
     location: {
-      x: getRandomNumber(LOCATION_X_MIN, LOCATION_X_MAX),
+      x: getRandomNumber(LOCATION_X_MIN, locationXMax()),
       y: getRandomNumber(LOCATION_Y_MIN, LOCATION_Y_MAX)
     }
   };
@@ -93,10 +99,21 @@ var getPropositions = function (length) {
   return propositions;
 };
 
+var getConformity = function (element, arr1, arr2) {
+  var conformity = '';
+  for (var i = 0; i < arr1.length; i++) {
+    if (element === arr1[i]) {
+      conformity = arr2[i];
+    }
+  }
+  return conformity;
+};
+
 var renderPin = function (proposition) {
   var pinElement = pin.cloneNode(true);
 
-  pinElement.style = 'left: ' + proposition.location.x + 'px; top: ' + proposition.location.y + 'px;';
+  pinElement.style.left = proposition.location.x + 'px';
+  pinElement.style.top = proposition.location.y + 'px';
   pinElement.alt = PIN_TITLE;
   pinElement.src = proposition.author.avatar;
 
@@ -105,8 +122,8 @@ var renderPin = function (proposition) {
 
 var renderPins = function () {
   var fragment = document.createDocumentFragment();
-  for (var k = 0; k < propositions.length; k++) {
-    fragment.appendChild(renderPin(propositions[k]));
+  for (var i = 0; i < propositions.length; i++) {
+    fragment.appendChild(renderPin(propositions[i]));
   }
   return fragment;
 };
@@ -115,15 +132,13 @@ var propositions = getPropositions(MAX_USER_NUMBER);
 
 renderPins(propositions);
 
-// similarListElement.appendChild(renderPins());
-
 var renderCard = function (proposition) {
   var cardElement = card.cloneNode(true);
 
   cardElement.querySelector('.popup__title').textContent = proposition.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = proposition.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = proposition.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = proposition.offer.type;
+  cardElement.querySelector('.popup__type').textContent = getConformity(proposition.offer.type, PROPERTY_TYPES, TRANSLATE_PROPERTIES);
   cardElement.querySelector('.popup__text--capacity').textContent = proposition.offer.rooms + ' комнаты для ' + proposition.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + proposition.offer.checkin + ', выезд до ' + proposition.offer.checkout;
   cardElement.querySelector('.popup__features').textContent = proposition.offer.features;
@@ -133,7 +148,11 @@ var renderCard = function (proposition) {
   return cardElement;
 };
 
-map.appendChild(renderCard(propositions[0]));
+var setupDisabled = function (inputs) {
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].setAttribute('disabled', 'disabled');
+  }
+};
 
 var disabledDeletion = function (inputs) {
   for (var i = 0; i < inputs.length; i++) {
@@ -141,10 +160,19 @@ var disabledDeletion = function (inputs) {
   }
 };
 
+var pageDeactivation = function () {
+  setupDisabled(formInputs);
+  setupDisabled(formSelects);
+  setupDisabled(formFieldsets);
+};
+
+pageDeactivation();
+
 var pageActivation = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   mapFiltres.classList.remove('ad-form--disabled');
+  similarListElement.appendChild(renderPins());
   disabledDeletion(formInputs);
   disabledDeletion(formSelects);
   disabledDeletion(formFieldsets);
@@ -153,12 +181,18 @@ var pageActivation = function () {
 
 onMainMapPin.addEventListener('mousedown', pageActivation);
 
+
 onMainMapPin.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     pageActivation();
   }
 });
 
+var openPropositionCard = function () {
+  map.appendChild(renderCard(propositions[0]));
+};
+
+pin.addEventListener('click', openPropositionCard);
 
 var checkRooms = function () {
   var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
@@ -166,6 +200,7 @@ var checkRooms = function () {
 
   if (capacitySelectedOption > roomsSelectedOption) {
     capacitySelect.setCustomValidity('Количество гостей не должно превышать количество комнат');
+    capacitySelect.validity = false;
   } else {
     capacitySelect.setCustomValidity('');
   }
@@ -173,3 +208,5 @@ var checkRooms = function () {
 
 capacitySelect.addEventListener('change', checkRooms);
 roomSelect.addEventListener('change', checkRooms);
+
+submit.addEventListener('click', checkRooms);
