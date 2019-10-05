@@ -7,6 +7,7 @@ var MIN_PRICE = 0;
 var MAX_PRICE = 1000000;
 var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var TRANSLATE_PROPERTIES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
+var MIN_PRICES = ['10000', '1000', '5000', '0'];
 var MIN_ROOMS = 1;
 var MAX_ROOMS = 100;
 var CHECKIN_DATES = ['12:00', '13:00', '14:00'];
@@ -33,6 +34,8 @@ var formSelects = adForm.querySelectorAll('select');
 var formFieldsets = adForm.querySelectorAll('fieldset');
 var roomSelect = document.querySelector('#room_number');
 var capacitySelect = document.querySelector('#capacity');
+var typeSelect = document.querySelector('#type');
+var priceInput = document.querySelector('#price');
 var addressInput = document.querySelector('#address');
 var submit = document.querySelector('.ad-form__submit');
 
@@ -207,7 +210,31 @@ var checkRooms = function () {
   }
 };
 
+var changePricePlaceholder = function () {
+  var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
+  var priceComform = getConformity(typeSelectedOption, PROPERTY_TYPES, MIN_PRICES);
+
+  priceInput.placeholder = 'от ' + priceComform;
+};
+
+
+var checkPropertyPrices = function () {
+  var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
+  var priceComform = getConformity(typeSelectedOption, PROPERTY_TYPES, MIN_PRICES);
+  var translateType = getConformity(typeSelectedOption, PROPERTY_TYPES, TRANSLATE_PROPERTIES);
+
+  if (priceInput.value < priceComform) {
+    priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceComform + ' в объекте ' + translateType);
+    priceInput.validity = false;
+  } else {
+    priceInput.setCustomValidity('');
+  }
+};
+
+
 capacitySelect.addEventListener('change', checkRooms);
 roomSelect.addEventListener('change', checkRooms);
+priceInput.addEventListener('change', checkPropertyPrices);
+typeSelect.addEventListener('change', changePricePlaceholder);
 
-submit.addEventListener('click', checkRooms);
+submit.addEventListener('click', checkRooms, checkPropertyPrices);
