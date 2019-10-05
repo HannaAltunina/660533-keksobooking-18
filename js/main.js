@@ -24,9 +24,9 @@ var PIN_TITLE = 'Заголовок';
 var PIN_WIDTH = 40;
 var PIN_HEIGHT = 132;
 var similarListElement = document.querySelector('.map__pins');
-var pin = document.querySelector('.map__pin');
+var pin = document.querySelector('#pin').content;
+var mainPin = document.querySelector('.map__pin--main');
 var card = document.querySelector('#card').content.querySelector('.popup');
-var onMainMapPin = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var mapFiltres = document.querySelector('.map__filters');
 var formInputs = adForm.querySelectorAll('input');
@@ -65,7 +65,7 @@ var getGuestsNumber = function (rooms) {
 };
 
 var getAddressCoordinate = function (width, height) {
-  return (parseInt(onMainMapPin.style.left, 10) + width / 2) + ', ' + (parseInt(onMainMapPin.style.top, 10) + height);
+  return (parseInt(mainPin.style.left, 10) + width / 2) + ', ' + (parseInt(mainPin.style.top, 10) + height);
 };
 
 var generateProposition = function (j) {
@@ -114,14 +114,14 @@ var getConformity = function (element, arr1, arr2) {
 
 var renderPin = function (proposition) {
   var pinElement = pin.cloneNode(true);
-
-  pinElement.style.left = proposition.location.x + 'px';
-  pinElement.style.top = proposition.location.y + 'px';
+  pinElement.style = 'left: ' + proposition.location.x + 'px; top: ' + proposition.location.y + 'px;';
   pinElement.alt = PIN_TITLE;
   pinElement.src = proposition.author.avatar;
 
   return pinElement;
 };
+
+var propositions = getPropositions(MAX_USER_NUMBER);
 
 var renderPins = function () {
   var fragment = document.createDocumentFragment();
@@ -130,10 +130,6 @@ var renderPins = function () {
   }
   return fragment;
 };
-
-var propositions = getPropositions(MAX_USER_NUMBER);
-
-renderPins(propositions);
 
 var renderCard = function (proposition) {
   var cardElement = card.cloneNode(true);
@@ -173,27 +169,27 @@ var pageDeactivation = function () {
 pageDeactivation();
 
 var pageActivation = function () {
+  similarListElement.appendChild(renderPins());
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   mapFiltres.classList.remove('ad-form--disabled');
-  similarListElement.appendChild(renderPins());
   disabledDeletion(formInputs);
   disabledDeletion(formSelects);
   disabledDeletion(formFieldsets);
   addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
 };
 
-onMainMapPin.addEventListener('mousedown', pageActivation);
+mainPin.addEventListener('mousedown', pageActivation);
 
 
-onMainMapPin.addEventListener('keydown', function (evt) {
+mainPin.addEventListener('keydown', function (evt) {
   if (evt.keyCode === 13) {
     pageActivation();
   }
 });
 
 var openPropositionCard = function () {
-  map.appendChild(renderCard(propositions[0]));
+  map.appendChild(renderCard());
 };
 
 pin.addEventListener('click', openPropositionCard);
