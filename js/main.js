@@ -164,6 +164,7 @@ var pageDeactivation = function () {
   setupDisabled(formInputs);
   setupDisabled(formSelects);
   setupDisabled(formFieldsets);
+  mapFiltres.classList.add('ad-form--disabled');
 };
 
 pageDeactivation();
