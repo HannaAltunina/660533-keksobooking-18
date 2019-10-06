@@ -228,28 +228,33 @@ var checkPropertyPrices = function () {
   }
 };
 
-var getConformTime = function () {
-  var timeinSelectedOption = timeinSelect.options[timeinSelect.selectedIndex].value;
-  var timeoutSelectToCheck = getConformity(timeinSelectedOption, timeinSelect, timeoutSelect);
-  for (var i = 0; i < timeoutSelect.options.length; i++) {
-    if (timeoutSelect.options[i].value === timeoutSelectToCheck) {
-      // timeoutSelect.options[timeoutSelect.selectedIndex].removeAttribute('selected');
-      timeoutSelect.options[i] = timeoutSelect[timeoutSelect.selectedIndex].defaultSelected;
-      // timeoutSelect.options[i].selected = true;
-      // timeoutSelect.options[i].setAttribute('selected', 'selected');
-    } else {
-      timeoutSelect.setCustomValidity('время выезда соответствует времени заезда ' + timeoutSelectToCheck);
-      timeoutSelect.options[i].validity = false;
-    }
-  }
+var getConformTime = function (timeSelect1, timeSelect2) {
+  var timeSelectedOption = timeSelect1.options[timeSelect1.selectedIndex].value;
+  timeSelect2.options[timeSelect2.selectedIndex].value = timeSelectedOption;
+  // for (var i = 0; i < timeoutSelect.options.length; i++) {
+  //   if (timeoutSelect.options[i].value === timeoutSelectToCheck) {
+  //     timeoutSelect.value = timeoutSelectToCheck;
+
+  //     // timeoutSelect.options[timeoutSelect.selectedIndex].removeAttribute('selected');
+  //     // timeoutSelect.options[i] = timeoutSelect[timeoutSelect.selectedIndex].defaultSelected;
+  //     // timeoutSelect.options[i].selected = true;
+  //     // timeoutSelect.options[i].setAttribute('selected', 'selected');
+  //   } else {
+  //     timeoutSelect.setCustomValidity('время выезда соответствует времени заезда ' + timeoutSelectToCheck);
+  //     timeoutSelect.options[i].validity = false;
+  //   }
+  // }
 };
 
+var getConformTimeOut = getConformTime(timeinSelect, timeoutSelect);
+var getConformTimeIn = getConformTime(timeoutSelect, timeinSelect);
+
+timeinSelect.addEventListener('change', getConformTimeOut);
+timeoutSelect.addEventListener('change', getConformTimeIn);
 
 capacitySelect.addEventListener('change', checkRooms);
 roomSelect.addEventListener('change', checkRooms);
 priceInput.addEventListener('change', checkPropertyPrices);
 typeSelect.addEventListener('change', changePricePlaceholder);
-timeinSelect.addEventListener('change', getConformTime);
-
 
 submit.addEventListener('click', checkRooms, checkPropertyPrices);
