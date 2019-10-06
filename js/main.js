@@ -118,7 +118,7 @@ var renderPin = function (proposition) {
   var pinElement = pin.cloneNode(true);
   pinElement.style = 'left: ' + proposition.location.x + 'px; top: ' + proposition.location.y + 'px;';
   pinElement.alt = PIN_TITLE;
-  pinElement.src = proposition.author.avatar;
+  pinElement.querySelector('img').src = proposition.author.avatar;
 
   return pinElement;
 };
@@ -229,7 +229,7 @@ var checkPropertyPrices = function () {
 };
 
 var getConformTime = function (timeSelect1, timeSelect2) {
-  return function (evt) {
+  return function () {
     timeSelect1.value = timeSelect2.value;
   };
 };
