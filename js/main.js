@@ -229,25 +229,13 @@ var checkPropertyPrices = function () {
 };
 
 var getConformTime = function (timeSelect1, timeSelect2) {
-  var timeSelectedOption = timeSelect1.options[timeSelect1.selectedIndex].value;
-  timeSelect2.options[timeSelect2.selectedIndex].value = timeSelectedOption;
-  // for (var i = 0; i < timeoutSelect.options.length; i++) {
-  //   if (timeoutSelect.options[i].value === timeoutSelectToCheck) {
-  //     timeoutSelect.value = timeoutSelectToCheck;
-
-  //     // timeoutSelect.options[timeoutSelect.selectedIndex].removeAttribute('selected');
-  //     // timeoutSelect.options[i] = timeoutSelect[timeoutSelect.selectedIndex].defaultSelected;
-  //     // timeoutSelect.options[i].selected = true;
-  //     // timeoutSelect.options[i].setAttribute('selected', 'selected');
-  //   } else {
-  //     timeoutSelect.setCustomValidity('время выезда соответствует времени заезда ' + timeoutSelectToCheck);
-  //     timeoutSelect.options[i].validity = false;
-  //   }
-  // }
+  return function (evt) {
+    timeSelect1.value = timeSelect2.value;
+  };
 };
 
-var getConformTimeOut = getConformTime(timeinSelect, timeoutSelect);
-var getConformTimeIn = getConformTime(timeoutSelect, timeinSelect);
+var getConformTimeOut = getConformTime(timeoutSelect, timeinSelect);
+var getConformTimeIn = getConformTime(timeinSelect, timeoutSelect);
 
 timeinSelect.addEventListener('change', getConformTimeOut);
 timeoutSelect.addEventListener('change', getConformTimeIn);
