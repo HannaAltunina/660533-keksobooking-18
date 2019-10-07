@@ -44,7 +44,6 @@
 
       if (priceInput.value < priceConform) {
         priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
-        priceInput.validity = false;
       } else {
         priceInput.setCustomValidity('');
       }
