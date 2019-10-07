@@ -38,6 +38,7 @@
     addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
   }
 
+<<<<<<< HEAD
   function pageActivation() {
     similarListElement.appendChild(window.pin.renderPins());
     window.card.map.classList.remove('map--faded');
@@ -53,12 +54,20 @@
 
   mainPin.addEventListener('click', pageActivation);
   mainPin.addEventListener('keydown', function (evt) {
+=======
+  window.mainPin.addEventListener('click', window.main.pageActivation);
+  window.mainPin.addEventListener('keydown', function (evt) {
+>>>>>>> 877b22a... пождвижность пина
     if (evt.keyCode === 13) {
       pageActivation();
     }
   });
 
+<<<<<<< HEAD
   mainPin.addEventListener('mousedown', function (evt) {
+=======
+  window.mainPin.addEventListener('mousedown', function (evt) {
+>>>>>>> 877b22a... пождвижность пина
     evt.preventDefault();
 
     var startCoords = {
@@ -82,13 +91,18 @@
         y: moveEvt.clientY
       };
 
+<<<<<<< HEAD
       mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
+=======
+      window.mainPin.style = 'left: ' + (window.mainPin.offsetLeft - shift.x) + 'px; top: ' + (window.mainPin.offsetTop - shift.y) + 'px;';
+>>>>>>> 877b22a... пождвижность пина
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+<<<<<<< HEAD
       getAddressCoordinate();
 
       if (dragged) {
@@ -97,11 +111,22 @@
           mainPin.removeEventListener('click', onClickPreventDefault);
         };
         mainPin.addEventListener('click', onClickPreventDefault);
+=======
+      window.data.getAddressCoordinate();
+
+      if (dragged) {
+        var onClickPreventDefault = function (evt) {
+          evt.preventDefault();
+          window.mainPin.removeEventListener('click', onClickPreventDefault);
+        };
+        window.mainPin.addEventListener('click', onClickPreventDefault);
+>>>>>>> 877b22a... пождвижность пина
       }
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+<<<<<<< HEAD
   });
 
   window.pin.pin.addEventListener('click', window.card.openPropositionCard);
@@ -110,4 +135,8 @@
     mainPin: mainPin,
     adForm: adForm
   };
+=======
+
+  });
+>>>>>>> 877b22a... пождвижность пина
 })();
