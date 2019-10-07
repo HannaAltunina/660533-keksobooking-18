@@ -97,7 +97,7 @@
       window.data.getAddressCoordinate();
 
       if (dragged) {
-        var onClickPreventDefault = function (evt) {
+        var onClickPreventDefault = function () {
           evt.preventDefault();
           window.mainPin.removeEventListener('click', onClickPreventDefault);
         };
