@@ -8,65 +8,54 @@
   var timeinSelect = document.querySelector('#timein');
   var timeoutSelect = document.querySelector('#timeout');
   var submit = document.querySelector('.ad-form__submit');
+  var MIN_PRICES = ['10000', '1000', '5000', '0'];
 
-  window.roomSelect = roomSelect;
-  window.capacitySelect = capacitySelect;
-  window.typeSelect = typeSelect;
-  window.priceInput = priceInput;
-  window.timeinSelect = timeinSelect;
-  window.timeoutSelect = timeoutSelect;
-  window.submit = submit;
+  function checkRooms() {
+    var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
+    var capacitySelectedOption = capacitySelect.options[capacitySelect.selectedIndex].value;
 
-  window.form = {
-    checkRooms: function () {
-      var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
-      var capacitySelectedOption = capacitySelect.options[capacitySelect.selectedIndex].value;
-
-      if (capacitySelectedOption > roomsSelectedOption) {
-        capacitySelect.setCustomValidity('Количество гостей не должно превышать количество комнат');
-        capacitySelect.validity = false;
-      } else {
-        capacitySelect.setCustomValidity('');
-      }
-    },
-
-    changePricePlaceholder: function () {
-      var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
-      var priceComform = window.data.getConformity(typeSelectedOption, window.PROPERTY_TYPES, window.MIN_PRICES);
-
-      priceInput.placeholder = 'от ' + priceComform;
-    },
-
-    checkPropertyPrices: function () {
-      var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
-      var priceConform = window.data.getConformity(typeSelectedOption, window.PROPERTY_TYPES, window.MIN_PRICES);
-      var translateType = window.data.getConformity(typeSelectedOption, window.PROPERTY_TYPES, window.TRANSLATE_PROPERTIES);
-
-      if (priceInput.value < priceConform) {
-        priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
-      } else {
-        priceInput.setCustomValidity('');
-      }
-    },
-
-    getConformTime: function (timeSelect1, timeSelect2) {
-      return function () {
-        timeSelect1.value = timeSelect2.value;
-      };
+    if (capacitySelectedOption > roomsSelectedOption) {
+      capacitySelect.setCustomValidity('Количество гостей не должно превышать количество комнат');
+    } else {
+      capacitySelect.setCustomValidity('');
     }
-  };
+  }
 
-  var getConformTimeOut = window.form.getConformTime(timeoutSelect, timeinSelect);
-  var getConformTimeIn = window.form.getConformTime(timeinSelect, timeoutSelect);
+  function changePricePlaceholder() {
+    var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
+    var priceComform = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, MIN_PRICES);
+
+    priceInput.placeholder = 'от ' + priceComform;
+  }
+
+  function checkPropertyPrices() {
+    var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
+    var priceConform = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, MIN_PRICES);
+    var translateType = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, window.card.TRANSLATE_PROPERTIES);
+
+    if (priceInput.value < priceConform) {
+      priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
+    } else {
+      priceInput.setCustomValidity('');
+    }
+  }
+
+  function getConformTime(timeSelect1, timeSelect2) {
+    return function () {
+      timeSelect1.value = timeSelect2.value;
+    };
+  }
+
+  var getConformTimeOut = getConformTime(timeoutSelect, timeinSelect);
+  var getConformTimeIn = getConformTime(timeinSelect, timeoutSelect);
 
   timeinSelect.addEventListener('change', getConformTimeOut);
   timeoutSelect.addEventListener('change', getConformTimeIn);
 
-  capacitySelect.addEventListener('change', window.form.checkRooms);
-  roomSelect.addEventListener('change', window.form.checkRooms);
-  priceInput.addEventListener('change', window.form.checkPropertyPrices);
-  typeSelect.addEventListener('change', window.form.changePricePlaceholder);
+  capacitySelect.addEventListener('change', checkRooms);
+  roomSelect.addEventListener('change', checkRooms);
+  priceInput.addEventListener('change', checkPropertyPrices);
+  typeSelect.addEventListener('change', changePricePlaceholder);
 
-  submit.addEventListener('click', window.form.checkRooms, window.form.checkPropertyPrices);
-
+  submit.addEventListener('click', checkRooms, checkPropertyPrices);
 })();
