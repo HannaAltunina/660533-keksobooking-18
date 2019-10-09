@@ -14,6 +14,8 @@
   var addressInput = document.querySelector('#address');
   var mainPin = document.querySelector('.map__pin--main');
 
+  // var PIN_WIDTH_LIMIT_MIN =
+
   function getAddressCoordinate(width, height) {
     return (parseInt(mainPin.style.left, 10) + width / 2) + ', ' + (parseInt(mainPin.style.top, 10) + height);
   }
@@ -82,7 +84,18 @@
         y: moveEvt.clientY
       };
 
-      mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
+
+      if ((mainPin.offsetTop - shift.y + PIN_HEIGHT) < window.data.LOCATION_Y_MIN) {
+        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + window.data.LOCATION_Y_MIN + 'px;';
+      } else {
+        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
+      }
+
+      if ((mainPin.offsetTop - shift.y + PIN_HEIGHT) > window.data.LOCATION_Y_MAX) {
+        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + window.data.LOCATION_Y_MAX + 'px;';
+      } else {
+        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
+      }
     };
 
     var onMouseUp = function (upEvt) {
