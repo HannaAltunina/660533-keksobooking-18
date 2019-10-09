@@ -84,18 +84,7 @@
         y: moveEvt.clientY
       };
 
-
-      if ((mainPin.offsetTop - shift.y + PIN_HEIGHT) < window.data.LOCATION_Y_MIN) {
-        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + window.data.LOCATION_Y_MIN + 'px;';
-      } else {
-        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
-      }
-
-      if ((mainPin.offsetTop - shift.y + PIN_HEIGHT) > window.data.LOCATION_Y_MAX) {
-        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + window.data.LOCATION_Y_MAX + 'px;';
-      } else {
-        mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
-      }
+      mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
     };
 
     var onMouseUp = function (upEvt) {
