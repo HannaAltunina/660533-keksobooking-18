@@ -12,18 +12,18 @@
   // var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   // var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
   // var LOCATION_X_MIN = 0;
-  var BODY_WIDTH = 1200;
+  // var BODY_WIDTH = 1200;
   // var LOCATION_Y_MIN = 130;
   // var LOCATION_Y_MAX = 630;
-  var widthContentArea = document.documentElement.clientWidth;
+  // var widthContentArea = document.documentElement.clientWidth;
 
-  function locationXMax() {
-    return (widthContentArea < BODY_WIDTH) ? widthContentArea : BODY_WIDTH;
-  }
+  // function locationXMax() {
+  //   return (widthContentArea < BODY_WIDTH) ? widthContentArea : BODY_WIDTH;
+  // }
 
-  function getGuestsNumber(rooms) {
-    return (rooms === 1) ? ('для ' + rooms + ' гостя') : ('для ' + rooms + ' гостей');
-  }
+  // function getGuestsNumber(rooms) {
+  //   return (rooms === 1) ? ('для ' + rooms + ' гостя') : ('для ' + rooms + ' гостей');
+  // }
 
   // function generateProposition(j) {
   //   var proposition = {
