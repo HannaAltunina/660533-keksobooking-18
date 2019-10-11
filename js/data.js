@@ -62,6 +62,9 @@
 
   window.data = {
     PROPERTY_TYPES: PROPERTY_TYPES,
+    LOCATION_X_MIN: LOCATION_X_MIN,
+    LOCATION_Y_MIN: LOCATION_Y_MIN,
+    LOCATION_Y_MAX: LOCATION_Y_MAX,
     generateProposition: generateProposition,
     getPropositions: getPropositions
   };

@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var PIN_WIDTH = 40;
-  var PIN_HEIGHT = 66;
+  var PIN_WIDTH = 62;
+  var PIN_HEIGHT = 84;
   var PIN_FIRST_WIDTH = 156;
   var PIN_FIRST_HEIGHT = 78;
   var similarListElement = document.querySelector('.map__pins');
@@ -13,6 +13,8 @@
   var formFieldsets = adForm.querySelectorAll('fieldset');
   var addressInput = document.querySelector('#address');
   var mainPin = document.querySelector('.map__pin--main');
+
+  // var PIN_WIDTH_LIMIT_MIN =
 
   function getAddressCoordinate(width, height) {
     return (parseInt(mainPin.style.left, 10) + width / 2) + ', ' + (parseInt(mainPin.style.top, 10) + height);
@@ -82,7 +84,21 @@
         y: moveEvt.clientY
       };
 
-      mainPin.style = 'left: ' + (mainPin.offsetLeft - shift.x) + 'px; top: ' + (mainPin.offsetTop - shift.y) + 'px;';
+
+      var bordersOfPinPosition = {
+        minX: window.data.LOCATION_X_MIN - (PIN_WIDTH / 2),
+        maxX: window.card.map.offsetWidth - (PIN_WIDTH / 2),
+        minY: window.data.LOCATION_Y_MIN - PIN_HEIGHT,
+        maxY: window.data.LOCATION_Y_MAX - PIN_HEIGHT
+      };
+
+      if (mainPin.offsetLeft - shift.x >= bordersOfPinPosition.minX && mainPin.offsetLeft - shift.x <= bordersOfPinPosition.maxX) {
+        mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+      }
+
+      if (mainPin.offsetTop - shift.y >= bordersOfPinPosition.minY && mainPin.offsetTop - shift.y <= bordersOfPinPosition.maxY) {
+        mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      }
     };
 
     var onMouseUp = function (upEvt) {
