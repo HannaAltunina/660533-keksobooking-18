@@ -14,8 +14,6 @@
   var addressInput = document.querySelector('#address');
   var mainPin = document.querySelector('.map__pin--main');
 
-  // var PIN_WIDTH_LIMIT_MIN =
-
   function getAddressCoordinate(width, height) {
     return (parseInt(mainPin.style.left, 10) + width / 2) + ', ' + (parseInt(mainPin.style.top, 10) + height);
   }
@@ -41,8 +39,8 @@
   }
 
   function pageActivation() {
-    similarListElement.appendChild(window.pin.renderPins());
-    window.card.map.classList.remove('map--faded');
+    window.pin.init();
+    window.pin.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapFiltres.classList.remove('ad-form--disabled');
     disabledDeletion(formInputs);
@@ -87,7 +85,7 @@
 
       var bordersOfPinPosition = {
         minX: window.data.LOCATION_X_MIN - (PIN_WIDTH / 2),
-        maxX: window.card.map.offsetWidth - (PIN_WIDTH / 2),
+        maxX: window.pin.map.offsetWidth - (PIN_WIDTH / 2),
         minY: window.data.LOCATION_Y_MIN - PIN_HEIGHT,
         maxY: window.data.LOCATION_Y_MAX - PIN_HEIGHT
       };
@@ -124,6 +122,7 @@
 
   window.main = {
     mainPin: mainPin,
-    adForm: adForm
+    adForm: adForm,
+    similarListElement: similarListElement
   };
 })();
