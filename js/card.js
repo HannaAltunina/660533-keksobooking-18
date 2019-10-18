@@ -3,9 +3,8 @@
 (function () {
   var TRANSLATE_PROPERTIES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
   var card = document.querySelector('#card').content.querySelector('.popup');
-  var map = document.querySelector('.map');
 
-  function renderCard(proposition) {
+  function renderCard(proposition, i) {
     var cardElement = card.cloneNode(true);
 
     cardElement.querySelector('.popup__title').textContent = proposition.offer.title;
@@ -18,19 +17,29 @@
     cardElement.querySelector('.popup__description').textContent = proposition.offer.description;
     cardElement.querySelector('.popup__photos').src = proposition.offer.photos;
     cardElement.querySelector('.popup__avatar').src = proposition.author.avatar;
+    cardElement.setAttribute('rel', i);
+    cardElement.classList.add('hidden');
 
     return cardElement;
   }
 
-  function openPropositionCard() {
-    map.appendChild(renderCard());
+  function renderCards(propositions) {
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < window.pin.MAX_USER_NUMBER; i++) {
+      fragment.appendChild(renderCard(propositions[i], i));
+    }
+    return fragment;
   }
+
+  // function openCard(pinElement) {
+  //   var cardElement = window.pin.getPropositionCard(pinElement);
+  //   cardElement.classList.remove('hidden');
+  // }
 
   window.card = {
     card: card,
-    map: map,
-    renderCard: renderCard,
-    openPropositionCard: openPropositionCard,
+    // openCard: openCard,
+    renderCards: renderCards,
     TRANSLATE_PROPERTIES: TRANSLATE_PROPERTIES
   };
 })();

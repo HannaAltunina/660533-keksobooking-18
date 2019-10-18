@@ -4,14 +4,14 @@
   // var OFFER_ADDRESS = '600, 350';
   // var MIN_PRICE = 0;
   // var MAX_PRICE = 1000000;
-  // var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+  var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   // var MIN_ROOMS = 1;
   // var MAX_ROOMS = 100;
   // var CHECKIN_DATES = ['12:00', '13:00', '14:00'];
   // var CHECKOUT_DATES = ['12:00', '13:00', '14:00'];
   // var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   // var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  // var LOCATION_X_MIN = 0;
+  var LOCATION_X_MIN = 0;
   // var BODY_WIDTH = 1200;
   // var LOCATION_Y_MIN = 130;
   // var LOCATION_Y_MAX = 630;
@@ -60,12 +60,12 @@
   //   return propositions;
   // }
 
-  // window.data = {
-  //   PROPERTY_TYPES: PROPERTY_TYPES,
-  //   LOCATION_X_MIN: LOCATION_X_MIN,
+  window.data = {
+    PROPERTY_TYPES: PROPERTY_TYPES,
+    LOCATION_X_MIN: LOCATION_X_MIN
   //   LOCATION_Y_MIN: LOCATION_Y_MIN,
   //   LOCATION_Y_MAX: LOCATION_Y_MAX,
   //   generateProposition: generateProposition,
   //   getPropositions: getPropositions
-  // };
+  };
 })();
