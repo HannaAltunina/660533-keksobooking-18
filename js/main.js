@@ -5,6 +5,9 @@
   var PIN_HEIGHT = 84;
   var PIN_FIRST_WIDTH = 156;
   var PIN_FIRST_HEIGHT = 78;
+  var LOCATION_X_MIN = 0;
+  var LOCATION_Y_MIN = 130;
+  var LOCATION_Y_MAX = 630;
   var similarListElement = document.querySelector('.map__pins');
   var adForm = document.querySelector('.ad-form');
   var mapFiltres = document.querySelector('.map__filters');
@@ -84,10 +87,10 @@
 
 
       var bordersOfPinPosition = {
-        minX: window.data.LOCATION_X_MIN - (PIN_WIDTH / 2),
+        minX: LOCATION_X_MIN - (PIN_WIDTH / 2),
         maxX: window.pin.map.offsetWidth - (PIN_WIDTH / 2),
-        minY: window.data.LOCATION_Y_MIN - PIN_HEIGHT,
-        maxY: window.data.LOCATION_Y_MAX - PIN_HEIGHT
+        minY: LOCATION_Y_MIN - PIN_HEIGHT,
+        maxY: LOCATION_Y_MAX - PIN_HEIGHT
       };
 
       if (mainPin.offsetLeft - shift.x >= bordersOfPinPosition.minX && mainPin.offsetLeft - shift.x <= bordersOfPinPosition.maxX) {
@@ -117,8 +120,6 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
-
-  window.pin.pin.addEventListener('click', window.card.openPropositionCard);
 
   window.main = {
     mainPin: mainPin,

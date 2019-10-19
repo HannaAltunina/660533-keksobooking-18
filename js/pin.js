@@ -8,9 +8,6 @@
   var error = document.querySelector('#error').content.querySelector('.error');
   var ESC_KEYCODE = 27;
 
-
-  // var mapPins = document.querySelectorAll('.pin__button');
-
   function renderPin(proposition, i) {
     var pinElement = pin.cloneNode(true);
     pinElement.style = 'left: ' + proposition.location.x + 'px; top: ' + proposition.location.y + 'px;';
@@ -19,10 +16,6 @@
     pinElement.setAttribute('rel', i);
     return pinElement;
   }
-
-  // mapPin.addEventListener('click', function () {
-  //   console.log('hi!');
-  // });
 
   function renderPins(propositions) {
     var fragment = document.createDocumentFragment();
