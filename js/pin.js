@@ -10,7 +10,7 @@
     pinElement.querySelector('img').alt = proposition.offer.title;
     pinElement.querySelector('img').src = proposition.author.avatar;
     pinElement.setAttribute('rel', i);
-    pinElement.addEventListener('click', window.card.openCard(pinElement));
+    pinElement.addEventListener('click', window.card.openCard);
 
     return pinElement;
   }

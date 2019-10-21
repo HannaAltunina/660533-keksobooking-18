@@ -45,17 +45,17 @@
   // }
 
 
-  function openCard(pinElement) {
-    console.log(pinElement.getAttribute('rel'));
-    // var cardElement = getPropositionCard(pinElement);
-    // cardElement.classList.remove('hidden');
+  function openCard(cardElement) {
+    cardElement.classList.remove('hidden');
   }
+
 
   window.card = {
     PROPERTY_TYPES: PROPERTY_TYPES,
     TRANSLATE_PROPERTIES: TRANSLATE_PROPERTIES,
     card: card,
     renderCards: renderCards,
+    getPropositionCard: getPropositionCard,
     openCard: openCard
   };
 })();

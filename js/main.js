@@ -63,7 +63,6 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    getAddressCoordinate();
 
     var startCoords = {
       x: evt.clientX,
@@ -74,7 +73,6 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      getAddressCoordinate();
       dragged = true;
 
       var shift = {
@@ -102,11 +100,12 @@
       if (mainPin.offsetTop - shift.y >= bordersOfPinPosition.minY && mainPin.offsetTop - shift.y <= bordersOfPinPosition.maxY) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
+
+      addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      getAddressCoordinate();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
@@ -117,10 +116,12 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
+      addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
     };
 
-    document.addEventListener('mousemove', onMouseMove, getAddressCoordinate);
-    document.addEventListener('mouseup', onMouseUp, getAddressCoordinate);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
   });
 
   window.main = {
