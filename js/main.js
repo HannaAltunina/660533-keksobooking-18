@@ -42,8 +42,8 @@
   }
 
   function pageActivation() {
-    window.pin.init();
-    window.pin.map.classList.remove('map--faded');
+    window.data.init();
+    window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapFiltres.classList.remove('ad-form--disabled');
     disabledDeletion(formInputs);
@@ -63,6 +63,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
+    getAddressCoordinate();
 
     var startCoords = {
       x: evt.clientX,
@@ -73,6 +74,7 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
+      getAddressCoordinate();
       dragged = true;
 
       var shift = {
@@ -88,7 +90,7 @@
 
       var bordersOfPinPosition = {
         minX: LOCATION_X_MIN - (PIN_WIDTH / 2),
-        maxX: window.pin.map.offsetWidth - (PIN_WIDTH / 2),
+        maxX: window.data.map.offsetWidth - (PIN_WIDTH / 2),
         minY: LOCATION_Y_MIN - PIN_HEIGHT,
         maxY: LOCATION_Y_MAX - PIN_HEIGHT
       };
@@ -104,9 +106,9 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
+      getAddressCoordinate();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      getAddressCoordinate();
 
       if (dragged) {
         var onClickPreventDefault = function () {
@@ -117,8 +119,8 @@
       }
     };
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove, getAddressCoordinate);
+    document.addEventListener('mouseup', onMouseUp, getAddressCoordinate);
   });
 
   window.main = {

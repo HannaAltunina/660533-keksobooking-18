@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MIN_PRICES = ['10000', '1000', '5000', '0'];
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
   var typeSelect = document.querySelector('#type');
@@ -8,7 +9,6 @@
   var timeinSelect = document.querySelector('#timein');
   var timeoutSelect = document.querySelector('#timeout');
   var submit = document.querySelector('.ad-form__submit');
-  var MIN_PRICES = ['10000', '1000', '5000', '0'];
 
   function checkRooms() {
     var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
@@ -23,15 +23,15 @@
 
   function changePricePlaceholder() {
     var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
-    var priceComform = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, MIN_PRICES);
+    var priceComform = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, MIN_PRICES);
 
     priceInput.placeholder = 'от ' + priceComform;
   }
 
   function checkPropertyPrices() {
     var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
-    var priceConform = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, MIN_PRICES);
-    var translateType = window.util.getConformity(typeSelectedOption, window.data.PROPERTY_TYPES, window.card.TRANSLATE_PROPERTIES);
+    var priceConform = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, MIN_PRICES);
+    var translateType = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, window.card.TRANSLATE_PROPERTIES);
 
     if (priceInput.value < priceConform) {
       priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
