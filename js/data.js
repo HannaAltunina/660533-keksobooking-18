@@ -14,19 +14,19 @@
     map.appendChild(cards);
   }
 
-  function closePopup() {
+  function closeError() {
     document.querySelector('.error').classList.add('hidden');
   }
 
-  function onPopupEscPress(evt) {
+  function onErrorEscPress(evt) {
     if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
+      closeError();
     }
   }
 
   function onAnyFieldClick(evt) {
     if (evt.target !== document.querySelector('.error__message')) {
-      closePopup();
+      closeError();
     }
   }
 
@@ -35,9 +35,9 @@
     var fragment = document.createDocumentFragment();
 
     fragment.appendChild(errorElement);
-    errorElement.querySelector('.error__button').addEventListener('click', closePopup);
+    errorElement.querySelector('.error__button').addEventListener('click', closeError);
     document.addEventListener('click', onAnyFieldClick);
-    document.addEventListener('keydown', onPopupEscPress);
+    document.addEventListener('keydown', onErrorEscPress);
 
     return fragment;
   }
@@ -56,6 +56,7 @@
   }
 
   window.data = {
+    ESC_KEYCODE: ESC_KEYCODE,
     map: map,
     init: init
   };

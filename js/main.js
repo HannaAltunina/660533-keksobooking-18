@@ -33,12 +33,21 @@
     }
   }
 
+  function getActivationPinAddress() {
+    addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
+  }
+
+
+  function getAddressInputValue() {
+    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+  }
+
   function pageDeactivation() {
     setupDisabled(formInputs);
     setupDisabled(formSelects);
     setupDisabled(formFieldsets);
     mapFiltres.classList.add('ad-form--disabled');
-    addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
+    getActivationPinAddress();
   }
 
   function pageActivation() {
@@ -49,7 +58,7 @@
     disabledDeletion(formInputs);
     disabledDeletion(formSelects);
     disabledDeletion(formFieldsets);
-    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+    getAddressInputValue();
   }
 
   pageDeactivation();
@@ -101,7 +110,7 @@
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
-      addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+      getAddressInputValue();
     };
 
     var onMouseUp = function (upEvt) {
@@ -116,12 +125,12 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
-      addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+      getAddressInputValue();
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+    getAddressInputValue();
   });
 
   window.main = {

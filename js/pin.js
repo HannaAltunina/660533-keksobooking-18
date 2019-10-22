@@ -11,6 +11,7 @@
     pinElement.querySelector('img').src = proposition.author.avatar;
     pinElement.setAttribute('rel', i);
     pinElement.addEventListener('click', window.card.openCard);
+    pinElement.addEventListener('keydown', window.card.onPinEnterPress);
 
     return pinElement;
   }
