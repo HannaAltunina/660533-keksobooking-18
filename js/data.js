@@ -48,7 +48,6 @@
     }
   }
 
-
   function renderInfoMessage(element) {
     var messageElement = element.cloneNode(true);
     var fragment = document.createDocumentFragment();
@@ -59,24 +58,24 @@
   }
 
   function onError() {
-    var errorMessage = renderInfoMessage(error);
-    errorMessage.querySelector('.error__button').addEventListener('click', closeError);
-    document.addEventListener('click', onAnyErrorFieldClick);
-    document.addEventListener('keydown', onErrorEscPress);
-
-    if (document.querySelector('.error')) {
-      return;
+    var errorElement = document.querySelector('.error');
+    if (errorElement) {
+      errorElement.classList.remove('hidden');
     } else {
+      var errorMessage = renderInfoMessage(error);
+      errorMessage.querySelector('.error__button').addEventListener('click', closeError);
+      document.addEventListener('click', onAnyErrorFieldClick);
+      document.addEventListener('keydown', onErrorEscPress);
       main.appendChild(errorMessage);
     }
   }
-
   function onSuccess() {
     var successMessage = renderInfoMessage(success);
     document.addEventListener('click', onAnySuccessFieldClick);
     document.addEventListener('keydown', onSuccessEscPress);
     main.appendChild(successMessage);
     form.reset();
+    window.main.getAddressInputValue();
   }
 
   function init() {

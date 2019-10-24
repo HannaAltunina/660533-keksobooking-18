@@ -136,6 +136,7 @@
   window.main = {
     mainPin: mainPin,
     adForm: adForm,
-    similarListElement: similarListElement
+    similarListElement: similarListElement,
+    getAddressInputValue: getAddressInputValue
   };
 })();
