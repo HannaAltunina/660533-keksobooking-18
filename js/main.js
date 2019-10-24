@@ -5,6 +5,9 @@
   var PIN_HEIGHT = 84;
   var PIN_FIRST_WIDTH = 156;
   var PIN_FIRST_HEIGHT = 78;
+  var LOCATION_X_MIN = 0;
+  var LOCATION_Y_MIN = 130;
+  var LOCATION_Y_MAX = 630;
   var similarListElement = document.querySelector('.map__pins');
   var adForm = document.querySelector('.ad-form');
   var mapFiltres = document.querySelector('.map__filters');
@@ -30,23 +33,32 @@
     }
   }
 
+  function getActivationPinAddress() {
+    addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
+  }
+
+
+  function getAddressInputValue() {
+    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+  }
+
   function pageDeactivation() {
     setupDisabled(formInputs);
     setupDisabled(formSelects);
     setupDisabled(formFieldsets);
     mapFiltres.classList.add('ad-form--disabled');
-    addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
+    getActivationPinAddress();
   }
 
   function pageActivation() {
-    window.pin.init();
-    window.pin.map.classList.remove('map--faded');
+    window.data.init();
+    window.data.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapFiltres.classList.remove('ad-form--disabled');
     disabledDeletion(formInputs);
     disabledDeletion(formSelects);
     disabledDeletion(formFieldsets);
-    addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
+    getAddressInputValue();
   }
 
   pageDeactivation();
@@ -84,10 +96,10 @@
 
 
       var bordersOfPinPosition = {
-        minX: window.data.LOCATION_X_MIN - (PIN_WIDTH / 2),
-        maxX: window.pin.map.offsetWidth - (PIN_WIDTH / 2),
-        minY: window.data.LOCATION_Y_MIN - PIN_HEIGHT,
-        maxY: window.data.LOCATION_Y_MAX - PIN_HEIGHT
+        minX: LOCATION_X_MIN - (PIN_WIDTH / 2),
+        maxX: window.data.map.offsetWidth - (PIN_WIDTH / 2),
+        minY: LOCATION_Y_MIN - PIN_HEIGHT,
+        maxY: LOCATION_Y_MAX - PIN_HEIGHT
       };
 
       if (mainPin.offsetLeft - shift.x >= bordersOfPinPosition.minX && mainPin.offsetLeft - shift.x <= bordersOfPinPosition.maxX) {
@@ -97,13 +109,14 @@
       if (mainPin.offsetTop - shift.y >= bordersOfPinPosition.minY && mainPin.offsetTop - shift.y <= bordersOfPinPosition.maxY) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
+
+      getAddressInputValue();
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-      getAddressCoordinate();
 
       if (dragged) {
         var onClickPreventDefault = function () {
@@ -112,17 +125,18 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
+      getAddressInputValue();
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+    getAddressInputValue();
   });
-
-  window.pin.pin.addEventListener('click', window.card.openPropositionCard);
 
   window.main = {
     mainPin: mainPin,
     adForm: adForm,
-    similarListElement: similarListElement
+    similarListElement: similarListElement,
+    getAddressInputValue: getAddressInputValue
   };
 })();
