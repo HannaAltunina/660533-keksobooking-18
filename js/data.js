@@ -7,9 +7,10 @@
   var success = document.querySelector('#success').content.querySelector('.success');
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-
+  var pins = [];
 
   function onDataLoad(propositions) {
+    // pins = propositions;
     var fragment = window.pin.renderPins(propositions);
     window.main.similarListElement.appendChild(fragment);
     var cards = window.card.renderCards(propositions);
@@ -88,6 +89,7 @@
     onSuccess: onSuccess,
     map: map,
     init: init,
-    form: form
+    form: form,
+    pins: pins
   };
 })();

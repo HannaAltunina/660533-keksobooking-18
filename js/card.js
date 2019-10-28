@@ -54,13 +54,14 @@
 
   function renderCards(propositions) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.pin.MAX_USER_NUMBER; i++) {
+    for (var i = 0; i < propositions.length; i++) {
       fragment.appendChild(renderCard(propositions[i], i));
     }
     return fragment;
   }
 
   function openCard() {
+    window.pin.pinActivation();
     var relValue = document.activeElement.getAttribute('rel');
     var cards = document.querySelectorAll('.map__card');
     for (var i = 0; i < cards.length; i++) {
