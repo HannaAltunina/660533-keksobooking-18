@@ -40,12 +40,16 @@
     cardElement.setAttribute('rel', i);
     cardElement.classList.add('hidden');
 
-    cardElement.querySelector('.popup__close').addEventListener('click', function () {
+    function cardClose() {
       cardElement.classList.add('hidden');
-    });
+      document.querySelector('.map__pin--active').classList.remove('map__pin--active');
+    }
+
+    cardElement.querySelector('.popup__close').addEventListener('click', cardClose);
+
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.data.ESC_KEYCODE) {
-        cardElement.classList.add('hidden');
+        cardClose();
       }
     });
 

@@ -33,10 +33,14 @@
     }
   }
 
+  function getPinOnMap() {
+    mainPin.style.left = '570px';
+    mainPin.style.top = '375px';
+  }
+
   function getActivationPinAddress() {
     addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
   }
-
 
   function getAddressInputValue() {
     addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
@@ -137,6 +141,9 @@
     mainPin: mainPin,
     adForm: adForm,
     similarListElement: similarListElement,
-    getAddressInputValue: getAddressInputValue
+    getAddressInputValue: getAddressInputValue,
+    getAddressCoordinate: getAddressCoordinate,
+    getPinOnMap: getPinOnMap,
+    addressInput: addressInput
   };
 })();

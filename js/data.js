@@ -10,7 +10,7 @@
   var pins = [];
 
   function onDataLoad(propositions) {
-    // pins = propositions;
+    pins = propositions;
     var fragment = window.pin.renderPins(propositions);
     window.main.similarListElement.appendChild(fragment);
     var cards = window.card.renderCards(propositions);

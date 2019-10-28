@@ -9,6 +9,8 @@
   var timeinSelect = document.querySelector('#timein');
   var timeoutSelect = document.querySelector('#timeout');
   var submit = document.querySelector('.ad-form__submit');
+  var reset = document.querySelector('.ad-form__reset');
+  var filtresForm = document.querySelector('.map__filters');
 
 
   function checkRooms() {
@@ -59,6 +61,13 @@
   typeSelect.addEventListener('change', changePricePlaceholder, checkPropertyPrices);
 
   submit.addEventListener('click', checkRooms, checkPropertyPrices);
+
+  reset.addEventListener('click', function () {
+    window.data.form.reset();
+    filtresForm.reset();
+    window.main.getPinOnMap();
+    window.main.addressInput.value = '!';
+  });
 
   window.data.form.addEventListener('submit', function (evt) {
     window.backend.save(new FormData(window.data.form), window.data.onSuccess, window.data.onError);
