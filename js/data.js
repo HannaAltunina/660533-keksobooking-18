@@ -95,6 +95,9 @@
     map: map,
     init: init,
     form: form,
-    pins: pins
+    pins: pins,
+    getPins: function () {
+      return pins;
+    }
   };
 })();

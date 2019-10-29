@@ -83,12 +83,20 @@
     }
   }
 
+  function closeCards() {
+    var cards = document.querySelectorAll('.map__card');
+    cards.forEach(function (it) {
+      it.classList.add('hidden');
+    });
+  }
+
   window.card = {
     PROPERTY_TYPES: PROPERTY_TYPES,
     TRANSLATE_PROPERTIES: TRANSLATE_PROPERTIES,
     card: card,
     renderCards: renderCards,
     openCard: openCard,
+    closeCards: closeCards,
     onPinEnterPress: onPinEnterPress
   };
 })();

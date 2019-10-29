@@ -33,9 +33,27 @@
     document.activeElement.classList.add('map__pin--active');
   }
 
+  function pinDeactivation() {
+    var pins = document.querySelectorAll('.map__pin');
+    pins.forEach(function (it) {
+      it.classList.remove('map__pin--active');
+    });
+  }
+
+  function deleteRenderedPins() {
+    var renderedPins = document.querySelectorAll('.map__pin');
+    renderedPins.forEach(function (renderedPin) {
+      if (renderedPin !== window.main.mainPin) {
+        window.main.similarListElement.removeChild(renderedPin);
+      }
+    });
+  }
+
   window.pin = {
     pin: pin,
     renderPins: renderPins,
-    pinActivation: pinActivation
+    pinActivation: pinActivation,
+    pinDeactivation: pinDeactivation,
+    deleteRenderedPins: deleteRenderedPins
   };
 })();

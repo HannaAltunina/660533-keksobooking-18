@@ -84,7 +84,7 @@
 
     var dragged = false;
 
-    var onMouseMove = function (moveEvt) {
+    function onMouseMove(moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
 
@@ -115,9 +115,9 @@
       }
 
       setAddressInputValue();
-    };
+    }
 
-    var onMouseUp = function (upEvt) {
+    function onMouseUp(upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -130,7 +130,7 @@
         mainPin.addEventListener('click', onClickPreventDefault);
       }
       setAddressInputValue();
-    };
+    }
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);

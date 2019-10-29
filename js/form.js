@@ -68,16 +68,8 @@
     filtresForm.reset();
     window.main.setPinOnMap();
     window.main.setAddressInputValue();
-
-    var cards = document.querySelectorAll('.map__card');
-    cards.forEach(function (card) {
-      card.classList.add('hidden');
-    });
-
-    var pins = document.querySelectorAll('.map__pin');
-    pins.forEach(function (pin) {
-      pin.classList.remove('map__pin--active');
-    });
+    window.card.closeCards();
+    window.pin.pinDeactivation();
   });
 
   window.data.form.addEventListener('submit', function (evt) {
