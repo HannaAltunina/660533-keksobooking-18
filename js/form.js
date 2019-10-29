@@ -62,11 +62,22 @@
 
   submit.addEventListener('click', checkRooms, checkPropertyPrices);
 
-  reset.addEventListener('click', function () {
+  reset.addEventListener('click', function (evt) {
+    evt.preventDefault();
     window.data.form.reset();
     filtresForm.reset();
-    window.main.getPinOnMap();
-    window.main.addressInput.value = '!';
+    window.main.setPinOnMap();
+    window.main.setAddressInputValue();
+
+    var cards = document.querySelectorAll('.map__card');
+    cards.forEach(function (card) {
+      card.classList.add('hidden');
+    });
+
+    var pins = document.querySelectorAll('.map__pin');
+    pins.forEach(function (pin) {
+      pin.classList.remove('map__pin--active');
+    });
   });
 
   window.data.form.addEventListener('submit', function (evt) {

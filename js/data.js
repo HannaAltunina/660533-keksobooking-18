@@ -71,12 +71,17 @@
     }
   }
   function onSuccess() {
-    var successMessage = renderInfoMessage(success);
-    document.addEventListener('click', onAnySuccessFieldClick);
-    document.addEventListener('keydown', onSuccessEscPress);
-    main.appendChild(successMessage);
-    form.reset();
-    window.main.getAddressInputValue();
+    var successElement = document.querySelector('.success');
+    if (successElement) {
+      successElement.classList.remove('hidden');
+    } else {
+      var successMessage = renderInfoMessage(success);
+      document.addEventListener('click', onAnySuccessFieldClick);
+      document.addEventListener('keydown', onSuccessEscPress);
+      main.appendChild(successMessage);
+      form.reset();
+      window.main.getAddressInputValue();
+    }
   }
 
   function init() {

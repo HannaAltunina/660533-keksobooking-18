@@ -33,16 +33,16 @@
     }
   }
 
-  function getPinOnMap() {
+  function setPinOnMap() {
     mainPin.style.left = '570px';
     mainPin.style.top = '375px';
   }
 
-  function getActivationPinAddress() {
+  function setActivationPinAddress() {
     addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
   }
 
-  function getAddressInputValue() {
+  function setAddressInputValue() {
     addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
   }
 
@@ -51,7 +51,7 @@
     setupDisabled(formSelects);
     setupDisabled(formFieldsets);
     mapFiltres.classList.add('ad-form--disabled');
-    getActivationPinAddress();
+    setActivationPinAddress();
   }
 
   function pageActivation() {
@@ -62,7 +62,7 @@
     disabledDeletion(formInputs);
     disabledDeletion(formSelects);
     disabledDeletion(formFieldsets);
-    getAddressInputValue();
+    setAddressInputValue();
   }
 
   pageDeactivation();
@@ -114,7 +114,7 @@
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
-      getAddressInputValue();
+      setAddressInputValue();
     };
 
     var onMouseUp = function (upEvt) {
@@ -129,21 +129,21 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
-      getAddressInputValue();
+      setAddressInputValue();
     };
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-    getAddressInputValue();
+    setAddressInputValue();
   });
 
   window.main = {
     mainPin: mainPin,
     adForm: adForm,
     similarListElement: similarListElement,
-    getAddressInputValue: getAddressInputValue,
+    setAddressInputValue: setAddressInputValue,
     getAddressCoordinate: getAddressCoordinate,
-    getPinOnMap: getPinOnMap,
+    setPinOnMap: setPinOnMap,
     addressInput: addressInput
   };
 })();
