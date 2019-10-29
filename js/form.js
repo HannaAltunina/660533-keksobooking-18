@@ -2,6 +2,7 @@
 
 (function () {
   var MIN_PRICES = ['10000', '1000', '5000', '0'];
+  var MAX_PRICE = 1000000;
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
   var typeSelect = document.querySelector('#type');
@@ -31,6 +32,16 @@
     priceInput.placeholder = 'от ' + priceComform;
   }
 
+  function checkPrice() {
+    console.log(priceInput.value);
+    if (parseInt(priceInput.value, 10) > MAX_PRICE) {
+      priceInput.setCustomValidity('Максимальная стоимость проживания за ночь ' + MAX_PRICE);
+    } else {
+      priceInput.setCustomValidity('');
+    }
+  }
+
+
   function checkPropertyPrices() {
     var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
     var priceConform = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, MIN_PRICES);
@@ -57,10 +68,10 @@
 
   capacitySelect.addEventListener('change', checkRooms);
   roomSelect.addEventListener('change', checkRooms);
-  priceInput.addEventListener('change', checkPropertyPrices);
+  priceInput.addEventListener('change', checkPropertyPrices, checkPrice);
   typeSelect.addEventListener('change', changePricePlaceholder, checkPropertyPrices);
 
-  submit.addEventListener('click', checkRooms, checkPropertyPrices);
+  submit.addEventListener('click', checkRooms, checkPropertyPrices, checkPrice);
 
   reset.addEventListener('click', function (evt) {
     evt.preventDefault();
