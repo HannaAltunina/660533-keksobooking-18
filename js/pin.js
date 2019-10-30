@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var MAX_USER_NUMBER = 8;
+  var PINS_COUNT = 5;
   var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 
   function renderPin(proposition, i) {
@@ -17,16 +17,43 @@
   }
 
   function renderPins(propositions) {
+    var pinsNumber = propositions.length > PINS_COUNT ? PINS_COUNT : propositions.length;
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < MAX_USER_NUMBER; i++) {
+    for (var i = 0; i < pinsNumber; i++) {
       fragment.appendChild(renderPin(propositions[i], i));
     }
     return fragment;
   }
 
+  function pinActivation() {
+    var mapPins = document.querySelectorAll('.map__pin');
+    mapPins.forEach(function (mapPin) {
+      mapPin.classList.remove('map__pin--active');
+    });
+    document.activeElement.classList.add('map__pin--active');
+  }
+
+  function pinDeactivation() {
+    var pins = document.querySelectorAll('.map__pin');
+    pins.forEach(function (it) {
+      it.classList.remove('map__pin--active');
+    });
+  }
+
+  function deleteRenderedPins() {
+    var renderedPins = document.querySelectorAll('.map__pin');
+    renderedPins.forEach(function (renderedPin) {
+      if (renderedPin !== window.main.mainPin) {
+        window.main.similarListElement.removeChild(renderedPin);
+      }
+    });
+  }
+
   window.pin = {
-    MAX_USER_NUMBER: MAX_USER_NUMBER,
     pin: pin,
     renderPins: renderPins,
+    pinActivation: pinActivation,
+    pinDeactivation: pinDeactivation,
+    deleteRenderedPins: deleteRenderedPins
   };
 })();

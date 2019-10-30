@@ -7,9 +7,10 @@
   var success = document.querySelector('#success').content.querySelector('.success');
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-
+  var pins = [];
 
   function onDataLoad(propositions) {
+    pins = propositions;
     var fragment = window.pin.renderPins(propositions);
     window.main.similarListElement.appendChild(fragment);
     var cards = window.card.renderCards(propositions);
@@ -70,12 +71,17 @@
     }
   }
   function onSuccess() {
-    var successMessage = renderInfoMessage(success);
-    document.addEventListener('click', onAnySuccessFieldClick);
-    document.addEventListener('keydown', onSuccessEscPress);
-    main.appendChild(successMessage);
-    form.reset();
-    window.main.getAddressInputValue();
+    var successElement = document.querySelector('.success');
+    if (successElement) {
+      successElement.classList.remove('hidden');
+    } else {
+      var successMessage = renderInfoMessage(success);
+      document.addEventListener('click', onAnySuccessFieldClick);
+      document.addEventListener('keydown', onSuccessEscPress);
+      main.appendChild(successMessage);
+      form.reset();
+      window.main.getAddressInputValue();
+    }
   }
 
   function init() {
@@ -88,6 +94,10 @@
     onSuccess: onSuccess,
     map: map,
     init: init,
-    form: form
+    form: form,
+    pins: pins,
+    getPins: function () {
+      return pins;
+    }
   };
 })();

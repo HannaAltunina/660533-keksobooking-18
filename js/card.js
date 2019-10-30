@@ -40,12 +40,16 @@
     cardElement.setAttribute('rel', i);
     cardElement.classList.add('hidden');
 
-    cardElement.querySelector('.popup__close').addEventListener('click', function () {
+    function closeCard() {
       cardElement.classList.add('hidden');
-    });
+      document.querySelector('.map__pin--active').classList.remove('map__pin--active');
+    }
+
+    cardElement.querySelector('.popup__close').addEventListener('click', closeCard);
+
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.data.ESC_KEYCODE) {
-        cardElement.classList.add('hidden');
+        closeCard();
       }
     });
 
@@ -54,13 +58,14 @@
 
   function renderCards(propositions) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.pin.MAX_USER_NUMBER; i++) {
+    for (var i = 0; i < propositions.length; i++) {
       fragment.appendChild(renderCard(propositions[i], i));
     }
     return fragment;
   }
 
   function openCard() {
+    window.pin.pinActivation();
     var relValue = document.activeElement.getAttribute('rel');
     var cards = document.querySelectorAll('.map__card');
     for (var i = 0; i < cards.length; i++) {
@@ -78,12 +83,29 @@
     }
   }
 
+  function closeCards() {
+    var cards = document.querySelectorAll('.map__card');
+    cards.forEach(function (it) {
+      it.classList.add('hidden');
+    });
+  }
+
+  function deleteRenderedCards() {
+    var renderedCards = document.querySelectorAll('.map__card');
+    renderedCards.forEach(function (renderedCard) {
+      window.data.map.removeChild(renderedCard);
+    });
+  }
+
+
   window.card = {
     PROPERTY_TYPES: PROPERTY_TYPES,
     TRANSLATE_PROPERTIES: TRANSLATE_PROPERTIES,
     card: card,
     renderCards: renderCards,
     openCard: openCard,
-    onPinEnterPress: onPinEnterPress
+    closeCards: closeCards,
+    onPinEnterPress: onPinEnterPress,
+    deleteRenderedCards: deleteRenderedCards
   };
 })();

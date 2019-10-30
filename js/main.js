@@ -33,12 +33,16 @@
     }
   }
 
-  function getActivationPinAddress() {
+  function setPinOnMap() {
+    mainPin.style.left = '570px';
+    mainPin.style.top = '375px';
+  }
+
+  function setActivationPinAddress() {
     addressInput.value = getAddressCoordinate(PIN_FIRST_WIDTH, PIN_FIRST_HEIGHT);
   }
 
-
-  function getAddressInputValue() {
+  function setAddressInputValue() {
     addressInput.value = getAddressCoordinate(PIN_WIDTH, PIN_HEIGHT);
   }
 
@@ -47,7 +51,7 @@
     setupDisabled(formSelects);
     setupDisabled(formFieldsets);
     mapFiltres.classList.add('ad-form--disabled');
-    getActivationPinAddress();
+    setActivationPinAddress();
   }
 
   function pageActivation() {
@@ -58,7 +62,7 @@
     disabledDeletion(formInputs);
     disabledDeletion(formSelects);
     disabledDeletion(formFieldsets);
-    getAddressInputValue();
+    setAddressInputValue();
   }
 
   pageDeactivation();
@@ -80,7 +84,7 @@
 
     var dragged = false;
 
-    var onMouseMove = function (moveEvt) {
+    function onMouseMove(moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
 
@@ -110,10 +114,10 @@
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
-      getAddressInputValue();
-    };
+      setAddressInputValue();
+    }
 
-    var onMouseUp = function (upEvt) {
+    function onMouseUp(upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -125,18 +129,21 @@
         };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
-      getAddressInputValue();
-    };
+      setAddressInputValue();
+    }
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-    getAddressInputValue();
+    setAddressInputValue();
   });
 
   window.main = {
     mainPin: mainPin,
     adForm: adForm,
     similarListElement: similarListElement,
-    getAddressInputValue: getAddressInputValue
+    setAddressInputValue: setAddressInputValue,
+    getAddressCoordinate: getAddressCoordinate,
+    setPinOnMap: setPinOnMap,
+    addressInput: addressInput
   };
 })();
