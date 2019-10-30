@@ -33,7 +33,6 @@
   }
 
   function checkPrice() {
-    console.log(priceInput.value);
     if (parseInt(priceInput.value, 10) > MAX_PRICE) {
       priceInput.setCustomValidity('Максимальная стоимость проживания за ночь ' + MAX_PRICE);
     } else {
