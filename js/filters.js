@@ -6,8 +6,8 @@
   var housingValue;
 
   function updatePins() {
-    window.card.closeCards();
     window.pin.deleteRenderedPins();
+    window.card.deleteRenderedCards();
     var sameHousingPins = window.data.getPins().filter(function (it) {
       if (housingValue === 'any') {
         return it;

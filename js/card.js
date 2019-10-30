@@ -90,6 +90,14 @@
     });
   }
 
+  function deleteRenderedCards() {
+    var renderedCards = document.querySelectorAll('.map__card');
+    renderedCards.forEach(function (renderedCard) {
+      window.data.map.removeChild(renderedCard);
+    });
+  }
+
+
   window.card = {
     PROPERTY_TYPES: PROPERTY_TYPES,
     TRANSLATE_PROPERTIES: TRANSLATE_PROPERTIES,
@@ -97,6 +105,7 @@
     renderCards: renderCards,
     openCard: openCard,
     closeCards: closeCards,
-    onPinEnterPress: onPinEnterPress
+    onPinEnterPress: onPinEnterPress,
+    deleteRenderedCards: deleteRenderedCards
   };
 })();
