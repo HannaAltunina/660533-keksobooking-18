@@ -45,8 +45,9 @@
     var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
     var priceConform = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, MIN_PRICES);
     var translateType = window.util.getConformity(typeSelectedOption, window.card.PROPERTY_TYPES, window.card.TRANSLATE_PROPERTIES);
+    var priceValue = priceInput.value;
 
-    if (parseInt(priceInput.value, 10) < parseInt(priceConform, 10)) {
+    if (parseInt(priceValue, 10) < parseInt(priceConform, 10)) {
       priceInput.setCustomValidity('Минимальная стоимость проживания за ночь ' + priceConform + ' в объекте ' + translateType);
     } else {
       priceInput.setCustomValidity('');
