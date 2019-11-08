@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var PINS_COUNT = 5;
+  var PINS_MAX_NUMBER = 5;
   var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 
   function renderPin(proposition, i) {
@@ -17,7 +17,7 @@
   }
 
   function renderPins(propositions) {
-    var pinsNumber = propositions.length > PINS_COUNT ? PINS_COUNT : propositions.length;
+    var pinsNumber = propositions.length > PINS_MAX_NUMBER ? PINS_MAX_NUMBER : propositions.length;
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < pinsNumber; i++) {
       fragment.appendChild(renderPin(propositions[i], i));
@@ -50,7 +50,6 @@
   }
 
   window.pin = {
-    pin: pin,
     renderPins: renderPins,
     pinActivation: pinActivation,
     pinDeactivation: pinDeactivation,

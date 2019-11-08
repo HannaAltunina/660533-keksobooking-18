@@ -1,24 +1,25 @@
 'use strict';
 
 (function () {
-  var LOW_PRICE = 10000;
-  var HIGH_PRICE = 50000;
+  var Price = {
+    LOW: 10000,
+    HIGH: 50000
+  };
 
   var filterSelections = document.querySelector('.map__filters').querySelectorAll('select');
   var housingType = document.querySelector('#housing-type');
   var housingPrice = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
   var housingGuests = document.querySelector('#housing-guests');
-
   var featureCheckboxes = document.querySelector('#housing-features').querySelectorAll('input');
 
   function getSameHousingPins(it) {
     var housingValue = housingType.options[housingType.selectedIndex].value;
     if (housingValue === 'any') {
       return it;
-    } else {
-      return it.offer.type === housingValue;
     }
+
+    return it.offer.type === housingValue;
   }
 
   function getSamePricedPins(it) {
@@ -26,11 +27,11 @@
 
     switch (priceValue) {
       case 'low':
-        return it.offer.price < LOW_PRICE;
+        return it.offer.price < Price.LOW;
       case 'middle':
-        return it.offer.price >= LOW_PRICE && it.offer.price < HIGH_PRICE;
+        return it.offer.price >= Price.LOW && it.offer.price < Price.HIGH;
       case 'high':
-        return it.offer.price >= HIGH_PRICE;
+        return it.offer.price >= Price.HIGH;
       default:
         return it;
     }
@@ -41,9 +42,9 @@
 
     if (roomsValue === 'any') {
       return it;
-    } else {
-      return it.offer.rooms === parseInt(roomsValue, 10);
     }
+
+    return it.offer.rooms === parseInt(roomsValue, 10);
   }
 
   function getSameGuestsPins(it) {
@@ -51,9 +52,9 @@
 
     if (guestsValue === 'any') {
       return it;
-    } else {
-      return it.offer.guests === parseInt(guestsValue, 10);
     }
+
+    return it.offer.guests === parseInt(guestsValue, 10);
   }
 
   function getSameFeaturesPins(it) {
