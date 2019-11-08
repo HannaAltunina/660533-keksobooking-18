@@ -44,15 +44,18 @@
     function closeCard() {
       cardElement.classList.add('hidden');
       document.querySelector('.map__pin--active').classList.remove('map__pin--active');
+      document.removeEventListener('keydown', onCardEscPress);
+    }
+
+    function onCardEscPress(evt) {
+      if (evt.keyCode === window.data.ESC_KEYCODE) {
+        closeCard();
+      }
     }
 
     cardElement.querySelector('.popup__close').addEventListener('click', closeCard);
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.data.ESC_KEYCODE) {
-        closeCard();
-      }
-    });
+    document.addEventListener('keydown', onCardEscPress);
 
     return cardElement;
   }
