@@ -3,25 +3,30 @@
 (function () {
   var MIN_PRICES = ['10000', '1000', '5000', '0'];
   var MAX_PRICE = 1000000;
+  var MAX_ROOMS_NUMBER = 100;
+  var NOT_FOR_GUESTS_VALUE = 0;
+
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
   var typeSelect = document.querySelector('#type');
   var priceInput = document.querySelector('#price');
   var timeinSelect = document.querySelector('#timein');
   var timeoutSelect = document.querySelector('#timeout');
-  var submit = document.querySelector('.ad-form__submit');
   var reset = document.querySelector('.ad-form__reset');
-  var filtresForm = document.querySelector('.map__filters');
-
+  var filtersForm = document.querySelector('.map__filters');
 
   function checkRooms() {
-    var roomsSelectedOption = roomSelect.options[roomSelect.selectedIndex].value;
-    var capacitySelectedOption = capacitySelect.options[capacitySelect.selectedIndex].value;
+    var roomsSelectedOption = (parseInt(roomSelect.options[roomSelect.selectedIndex].value, 10));
+    var capacitySelectedOption = (parseInt(capacitySelect.options[capacitySelect.selectedIndex].value, 10));
 
-    if (parseInt(capacitySelectedOption, 10) > parseInt(roomsSelectedOption, 10)) {
+    capacitySelect.setCustomValidity('');
+
+    if (roomsSelectedOption === MAX_ROOMS_NUMBER && capacitySelectedOption !== NOT_FOR_GUESTS_VALUE) {
+      capacitySelect.setCustomValidity('100 комнат не предназначены для размещения гостей');
+    } else if (roomsSelectedOption !== MAX_ROOMS_NUMBER && capacitySelectedOption === NOT_FOR_GUESTS_VALUE) {
+      capacitySelect.setCustomValidity('Вариант "не для гостей" доступен для 100 комнат');
+    } else if (capacitySelectedOption > roomsSelectedOption) {
       capacitySelect.setCustomValidity('Количество гостей не должно превышать количество комнат');
-    } else {
-      capacitySelect.setCustomValidity('');
     }
   }
 
@@ -31,15 +36,6 @@
 
     priceInput.placeholder = 'от ' + priceComform;
   }
-
-  function checkPrice() {
-    if (parseInt(priceInput.value, 10) > MAX_PRICE) {
-      priceInput.setCustomValidity('Максимальная стоимость проживания за ночь ' + MAX_PRICE);
-    } else {
-      priceInput.setCustomValidity('');
-    }
-  }
-
 
   function checkPropertyPrices() {
     var typeSelectedOption = typeSelect.options[typeSelect.selectedIndex].value;
@@ -60,6 +56,27 @@
     };
   }
 
+  function onTypeSelectClick() {
+    if (priceInput.value === '') {
+      changePricePlaceholder();
+    } else {
+      checkPropertyPrices();
+    }
+  }
+
+  function checkPrice() {
+    if (parseInt(priceInput.value, 10) > MAX_PRICE) {
+      priceInput.setCustomValidity('Максимальная стоимость проживания за ночь ' + MAX_PRICE);
+    } else {
+      checkPropertyPrices();
+    }
+  }
+
+  function checkForm() {
+    checkPrice();
+    checkRooms();
+  }
+
   var getConformTimeOut = getConformTime(timeoutSelect, timeinSelect);
   var getConformTimeIn = getConformTime(timeinSelect, timeoutSelect);
 
@@ -68,27 +85,27 @@
 
   capacitySelect.addEventListener('change', checkRooms);
   roomSelect.addEventListener('change', checkRooms);
-  priceInput.addEventListener('change', checkPropertyPrices, checkPrice);
-  typeSelect.addEventListener('change', changePricePlaceholder, checkPropertyPrices);
+  priceInput.addEventListener('change', checkPrice);
+  typeSelect.addEventListener('change', onTypeSelectClick);
 
-  submit.addEventListener('click', checkRooms, checkPropertyPrices, checkPrice);
+  checkForm();
 
   reset.addEventListener('click', function (evt) {
     evt.preventDefault();
     window.data.form.reset();
-    filtresForm.reset();
+    filtersForm.reset();
     window.main.setPinOnMap();
     window.main.setAddressInputValue();
     window.card.closeCards();
     window.pin.pinDeactivation();
+    window.pin.deleteRenderedPins();
+    window.main.pageDeactivation();
+    window.data.map.classList.add('map--faded');
+    window.main.adForm.classList.add('ad-form--disabled');
   });
 
   window.data.form.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(window.data.form), window.data.onSuccess, window.data.onError);
     evt.preventDefault();
+    window.backend.save(new FormData(window.data.form), window.data.onSuccess, window.data.onError);
   });
-
-  window.form = {
-
-  };
 })();

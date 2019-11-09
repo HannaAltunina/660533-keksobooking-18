@@ -19,10 +19,14 @@
 
   function closeError() {
     document.querySelector('.error').classList.add('hidden');
+    document.removeEventListener('keydown', onErrorEscPress);
+    document.removeEventListener('click', onAnyErrorFieldClick);
   }
 
   function closeSuccess() {
     document.querySelector('.success').classList.add('hidden');
+    document.removeEventListener('keydown', onSuccessEscPress);
+    document.removeEventListener('click', onAnySuccessFieldClick);
   }
 
   function onErrorEscPress(evt) {
@@ -80,7 +84,7 @@
       document.addEventListener('keydown', onSuccessEscPress);
       main.appendChild(successMessage);
       form.reset();
-      window.main.getAddressInputValue();
+      window.main.setAddressInputValue();
     }
   }
 
