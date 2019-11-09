@@ -12,7 +12,7 @@
     TOP: '375px'
   };
 
-  var Pin = {
+  var PinSize = {
     FIRST_WIDTH: 156,
     FIRST_HEIGHT: 78,
     WIDTH: 62,
@@ -34,11 +34,11 @@
   }
 
   function setActivationPinAddress() {
-    addressInput.value = window.util.getAddressCoordinate(mainPin, Pin.FIRST_WIDTH, Pin.FIRST_HEIGHT);
+    addressInput.value = window.util.getAddressCoordinate(mainPin, PinSize.FIRST_WIDTH, PinSize.FIRST_HEIGHT);
   }
 
   function setAddressInputValue() {
-    addressInput.value = window.util.getAddressCoordinate(mainPin, Pin.WIDTH, Pin.HEIGHT);
+    addressInput.value = window.util.getAddressCoordinate(mainPin, PinSize.WIDTH, PinSize.HEIGHT);
   }
 
   function pageDeactivation() {
@@ -96,10 +96,10 @@
 
 
       var bordersOfPinPosition = {
-        minX: Location.X_MIN - (Pin.WIDTH / 2),
-        maxX: window.data.map.offsetWidth - (Pin.WIDTH / 2),
-        minY: Location.Y_MIN - Pin.HEIGHT,
-        maxY: Location.Y_MAX - Pin.HEIGHT
+        minX: Location.X_MIN - (PinSize.WIDTH / 2),
+        maxX: window.data.map.offsetWidth - (PinSize.WIDTH / 2),
+        minY: Location.Y_MIN - PinSize.HEIGHT,
+        maxY: Location.Y_MAX - PinSize.HEIGHT
       };
 
       if (mainPin.offsetLeft - shift.x >= bordersOfPinPosition.minX && mainPin.offsetLeft - shift.x <= bordersOfPinPosition.maxX) {

@@ -3,7 +3,7 @@
 (function () {
   var SUCCESS_KEYCODE = 200;
   var TIMEOUT = 10000;
-  var Url = {
+  var Urls = {
     GET: 'https://js.dump.academy/keksobooking/data',
     POST: 'https://js.dump.academy/keksobooking'
   };
@@ -12,7 +12,7 @@
   function load(onLoad, onError) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', Url.GET);
+    xhr.open('GET', Urls.GET);
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       if (xhr.status === SUCCESS_KEYCODE) {
@@ -52,7 +52,7 @@
       onError('Произошла ошибка соединения');
     });
 
-    xhr.open('POST', Url.POST);
+    xhr.open('POST', Urls.POST);
     xhr.send(data);
   }
 

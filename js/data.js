@@ -84,7 +84,7 @@
       document.addEventListener('keydown', onSuccessEscPress);
       main.appendChild(successMessage);
       form.reset();
-      window.main.getAddressInputValue();
+      window.main.setAddressInputValue();
     }
   }
 
