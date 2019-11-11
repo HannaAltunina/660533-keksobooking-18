@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEYCODE = 27;
+
   var main = document.querySelector('main');
   var error = document.querySelector('#error').content.querySelector('.error');
   var success = document.querySelector('#success').content.querySelector('.success');
@@ -92,6 +93,10 @@
     window.backend.load(onDataLoad, onError);
   }
 
+  function getPins() {
+    return pins;
+  }
+
   window.data = {
     ESC_KEYCODE: ESC_KEYCODE,
     onError: onError,
@@ -100,8 +105,6 @@
     init: init,
     form: form,
     pins: pins,
-    getPins: function () {
-      return pins;
-    }
+    getPins: getPins
   };
 })();

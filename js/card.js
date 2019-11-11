@@ -4,6 +4,7 @@
   var TRANSLATE_PROPERTIES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
   var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var ENTER_KEYCODE = 13;
+
   var card = document.querySelector('#card').content.querySelector('.popup');
 
   function renderCard(proposition, i) {
