@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEYCODE = 27;
+
   var main = document.querySelector('main');
   var error = document.querySelector('#error').content.querySelector('.error');
   var success = document.querySelector('#success').content.querySelector('.success');
