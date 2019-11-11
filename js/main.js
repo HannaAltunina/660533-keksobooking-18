@@ -70,6 +70,13 @@
     }
   });
 
+  var onClickPreventDefault = function (evt) {
+    evt.preventDefault();
+    mainPin.removeEventListener('click', pageActivation);
+    mainPin.removeEventListener('click', onClickPreventDefault);
+  };
+
+
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -119,10 +126,6 @@
       document.removeEventListener('mouseup', onMouseUp);
 
       if (dragged) {
-        var onClickPreventDefault = function () {
-          evt.preventDefault();
-          mainPin.removeEventListener('click', onClickPreventDefault);
-        };
         mainPin.addEventListener('click', onClickPreventDefault);
       }
       setAddressInputValue();
