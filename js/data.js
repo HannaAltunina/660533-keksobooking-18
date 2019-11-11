@@ -93,6 +93,10 @@
     window.backend.load(onDataLoad, onError);
   }
 
+  function getPins() {
+    return pins;
+  }
+
   window.data = {
     ESC_KEYCODE: ESC_KEYCODE,
     onError: onError,
@@ -101,8 +105,6 @@
     init: init,
     form: form,
     pins: pins,
-    getPins: function () {
-      return pins;
-    }
+    getPins: getPins
   };
 })();
