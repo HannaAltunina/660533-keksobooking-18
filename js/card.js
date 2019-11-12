@@ -4,6 +4,9 @@
   var TRANSLATE_PROPERTIES = ['Дворец', 'Квартира', 'Дом', 'Бунгало'];
   var PROPERTY_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var ENTER_KEYCODE = 13;
+  var CARD_IMAGE_WIDTH = 45;
+  var CARD_IMAGE_HEIGHT = 45;
+
   var card = document.querySelector('#card').content.querySelector('.popup');
 
   function renderCard(proposition, i) {
@@ -32,8 +35,8 @@
       var cardImage = document.createElement('img');
       cardImage.classList.add('popup__photo');
       cardImage.src = photo;
-      cardImage.width = 45;
-      cardImage.height = 45;
+      cardImage.width = CARD_IMAGE_WIDTH;
+      cardImage.height = CARD_IMAGE_HEIGHT;
       cardElement.querySelector('.popup__photos').appendChild(cardImage);
     });
 

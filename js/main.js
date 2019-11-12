@@ -70,6 +70,11 @@
     }
   });
 
+  var onClickPreventDefault = function (evt) {
+    evt.preventDefault();
+    mainPin.removeEventListener('click', onClickPreventDefault);
+  };
+
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -93,7 +98,6 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-
 
       var bordersOfPinPosition = {
         minX: Location.X_MIN - (PinSize.WIDTH / 2),
@@ -119,11 +123,8 @@
       document.removeEventListener('mouseup', onMouseUp);
 
       if (dragged) {
-        var onClickPreventDefault = function () {
-          evt.preventDefault();
-          mainPin.removeEventListener('click', onClickPreventDefault);
-        };
         mainPin.addEventListener('click', onClickPreventDefault);
+        mainPin.removeEventListener('click', pageActivation);
       }
       setAddressInputValue();
     }

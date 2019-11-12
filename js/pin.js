@@ -2,6 +2,7 @@
 
 (function () {
   var PINS_MAX_NUMBER = 5;
+
   var pin = document.querySelector('#pin').content.querySelector('.map__pin');
 
   function renderPin(proposition, i) {
