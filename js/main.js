@@ -72,10 +72,8 @@
 
   var onClickPreventDefault = function (evt) {
     evt.preventDefault();
-    mainPin.removeEventListener('click', pageActivation);
     mainPin.removeEventListener('click', onClickPreventDefault);
   };
-
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -100,7 +98,6 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-
 
       var bordersOfPinPosition = {
         minX: Location.X_MIN - (PinSize.WIDTH / 2),
@@ -127,6 +124,7 @@
 
       if (dragged) {
         mainPin.addEventListener('click', onClickPreventDefault);
+        mainPin.removeEventListener('click', pageActivation);
       }
       setAddressInputValue();
     }

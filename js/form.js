@@ -5,6 +5,10 @@
   var MAX_PRICE = 1000000;
   var MAX_ROOMS_NUMBER = 100;
   var NOT_FOR_GUESTS_VALUE = 0;
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var IMAGE_WIDTH = 70;
+  var IMAGE_HEIGHT = 70;
+  var AVATAR_SOURCE = 'img/muffin-grey.svg';
 
   var roomSelect = document.querySelector('#room_number');
   var capacitySelect = document.querySelector('#capacity');
@@ -14,6 +18,60 @@
   var timeoutSelect = document.querySelector('#timeout');
   var reset = document.querySelector('.ad-form__reset');
   var filtersForm = document.querySelector('.map__filters');
+  var avatarChooser = document.querySelector('.ad-form-header__input');
+  var avatarPreview = document.querySelector('.ad-form-header__preview img');
+  var imagesChooser = document.querySelector('#images');
+  var imagesPreview = document.querySelector('.ad-form__photo');
+
+
+  function uploadPhoto(chooser, preview) {
+    var file = chooser.files[0];
+
+    var fileName = file.name.toLowerCase();
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        preview.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function onAvatarInputClick() {
+    avatarPreview.innerHTML = '';
+    uploadPhoto(avatarChooser, avatarPreview);
+  }
+
+  function deleteAvatar() {
+    avatarPreview.src = AVATAR_SOURCE;
+  }
+
+  function onImagesInputClick() {
+    var imageContainer = document.createElement('img');
+    imageContainer.classList.add('ad-form__image-preview');
+    imageContainer.width = IMAGE_WIDTH;
+    imageContainer.height = IMAGE_HEIGHT;
+    imagesPreview.appendChild(imageContainer);
+    uploadPhoto(imagesChooser, imageContainer);
+  }
+
+  function deletePreviewImages() {
+    var previewImages = document.querySelectorAll('.ad-form__image-preview');
+    previewImages.forEach(function (previewImage) {
+      imagesPreview.removeChild(previewImage);
+    });
+  }
+
+  avatarChooser.addEventListener('change', onAvatarInputClick);
+  imagesChooser.addEventListener('change', onImagesInputClick);
+
 
   function checkRooms() {
     var roomsSelectedOption = (parseInt(roomSelect.options[roomSelect.selectedIndex].value, 10));
@@ -92,6 +150,8 @@
 
   reset.addEventListener('click', function (evt) {
     evt.preventDefault();
+    deleteAvatar();
+    deletePreviewImages();
     window.data.form.reset();
     filtersForm.reset();
     window.main.setPinOnMap();
