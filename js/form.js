@@ -148,8 +148,7 @@
 
   checkForm();
 
-  reset.addEventListener('click', function (evt) {
-    evt.preventDefault();
+  function pageReset() {
     deleteAvatar();
     deletePreviewImages();
     window.data.form.reset();
@@ -162,10 +161,20 @@
     window.main.pageDeactivation();
     window.data.map.classList.add('map--faded');
     window.main.adForm.classList.add('ad-form--disabled');
+    window.main.mainPin.addEventListener('click', window.main.pageActivation);
+  }
+
+  reset.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    pageReset();
   });
 
   window.data.form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(window.data.form), window.data.onSuccess, window.data.onError);
   });
+
+  window.form = {
+    pageReset: pageReset
+  };
 })();

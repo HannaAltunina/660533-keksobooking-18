@@ -141,6 +141,7 @@
     setAddressInputValue: setAddressInputValue,
     setPinOnMap: setPinOnMap,
     addressInput: addressInput,
-    pageDeactivation: pageDeactivation
+    pageDeactivation: pageDeactivation,
+    pageActivation: pageActivation
   };
 })();

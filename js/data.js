@@ -70,10 +70,10 @@
     } else {
       var errorMessage = renderInfoMessage(error);
       errorMessage.querySelector('.error__button').addEventListener('click', closeError);
-      document.addEventListener('click', onAnyErrorFieldClick);
-      document.addEventListener('keydown', onErrorEscPress);
       main.appendChild(errorMessage);
     }
+    document.addEventListener('click', onAnyErrorFieldClick);
+    document.addEventListener('keydown', onErrorEscPress);
   }
   function onSuccess() {
     var successElement = document.querySelector('.success');
@@ -81,12 +81,11 @@
       successElement.classList.remove('hidden');
     } else {
       var successMessage = renderInfoMessage(success);
-      document.addEventListener('click', onAnySuccessFieldClick);
-      document.addEventListener('keydown', onSuccessEscPress);
       main.appendChild(successMessage);
-      form.reset();
-      window.main.setAddressInputValue();
     }
+    window.form.pageReset();
+    document.addEventListener('click', onAnySuccessFieldClick);
+    document.addEventListener('keydown', onSuccessEscPress);
   }
 
   function init() {
